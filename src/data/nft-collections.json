@@ -1,0 +1,86 @@
+[
+  {
+    "id": 1,
+    "name": "General",
+    "author": "Blum",
+    "verified": true,
+    "button": "GET FOR ⭐ 999",
+    "items": [
+      {
+        "image": "https://via.placeholder.com/120x120/8B5CF6/FFFFFF?text=✚",
+        "moreCount": null
+      },
+      {
+        "image": "https://via.placeholder.com/120x120/F59E0B/FFFFFF?text=⚡",
+        "moreCount": null
+      },
+      {
+        "image": "https://via.placeholder.com/120x120/EF4444/FFFFFF?text=👔",
+        "moreCount": "47 MORE"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "TO THE SUN",
+    "author": "SUNDOG",
+    "verified": true,
+    "button": "GET ON MARKET",
+    "items": [
+      {
+        "image": "https://via.placeholder.com/120x120/F59E0B/FFFFFF?text=🐕",
+        "moreCount": null
+      },
+      {
+        "image": "https://via.placeholder.com/120x120/EF4444/FFFFFF?text=📖",
+        "moreCount": null
+      },
+      {
+        "image": "https://via.placeholder.com/120x120/10B981/FFFFFF?text=😎",
+        "moreCount": "3 MORE"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "name": "Flags",
+    "author": "Notcoin",
+    "verified": true,
+    "button": "GET ON MARKET",
+    "items": [
+      {
+        "image": "https://via.placeholder.com/120x120/3B82F6/FFFFFF?text=🏴",
+        "moreCount": null
+      },
+      {
+        "image": "https://via.placeholder.com/120x120/F59E0B/FFFFFF?text=⚠️",
+        "moreCount": null
+      },
+      {
+        "image": "https://via.placeholder.com/120x120/10B981/FFFFFF?text=🏃",
+        "moreCount": "4 MORE"
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "name": "Pengu Valentines", 
+    "author": "Pudgy Penguins",
+    "verified": true,
+    "button": "GET ON MARKET",
+    "items": [
+      {
+        "image": "https://via.placeholder.com/120x120/EC4899/FFFFFF?text=💗",
+        "moreCount": null
+      },
+      {
+        "image": "https://via.placeholder.com/120x120/6B7280/FFFFFF?text=🎭",
+        "moreCount": null
+      },
+      {
+        "image": "https://via.placeholder.com/120x120/8B5CF6/FFFFFF?text=💖",
+        "moreCount": "7 MORE"
+      }
+    ]
+  }
+]

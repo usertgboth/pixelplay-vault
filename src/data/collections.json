@@ -1,42 +1,62 @@
 [
   {
     "id": 1,
-    "name": "Pixel Dogs",
-    "supply": 5555,
-    "floor": "1.2 TON",
-    "volume": "15K TON",
-    "image": "https://via.placeholder.com/200x200/8B5CF6/FFFFFF?text=🐕",
-    "description": "Adorable pixel art dogs on the blockchain",
-    "items": 234
+    "name": "USDT",
+    "symbol": "USDT",
+    "price": "$0.99819",
+    "change": "+0.1%",
+    "mcap": "$1.4B",
+    "image": "https://via.placeholder.com/40x40/10B981/FFFFFF?text=₮",
+    "isPositive": true
   },
   {
     "id": 2,
-    "name": "NotPixel Wizards",
-    "supply": 3333,
-    "floor": "2.5 TON",
-    "volume": "9K TON", 
-    "image": "https://via.placeholder.com/200x200/10B981/FFFFFF?text=🧙",
-    "description": "Magical wizards casting spells in pixel art",
-    "items": 156
+    "name": "BABYDOGE",
+    "symbol": "BABYDOGE", 
+    "price": "$0.0012799",
+    "change": "+1.97%",
+    "mcap": "$259.3M",
+    "image": "https://via.placeholder.com/40x40/F59E0B/FFFFFF?text=🐕",
+    "isPositive": true
   },
   {
     "id": 3,
-    "name": "Crypto Penguins",
-    "supply": 7777,
-    "floor": "0.8 TON",
-    "volume": "22K TON",
-    "image": "https://via.placeholder.com/200x200/F59E0B/FFFFFF?text=🐧",
-    "description": "Cool penguins living on the blockchain",
-    "items": 421
+    "name": "NOT",
+    "symbol": "NOT",
+    "price": "$0.0019334",
+    "change": "-1.36%", 
+    "mcap": "$198.1M",
+    "image": "https://via.placeholder.com/40x40/EF4444/FFFFFF?text=⚠️",
+    "isPositive": false
   },
   {
     "id": 4,
-    "name": "Blum Heroes",
-    "supply": 2222,
-    "floor": "4.2 TON",
-    "volume": "6K TON",
-    "image": "https://via.placeholder.com/200x200/EF4444/FFFFFF?text=🦸",
-    "description": "Superhero characters in pixel art style",
-    "items": 89
+    "name": "TSTON",
+    "symbol": "TSTON",
+    "price": "$3.3179",
+    "change": "-0.16%",
+    "mcap": "$190.0M", 
+    "image": "https://via.placeholder.com/40x40/6B7280/FFFFFF?text=⚫",
+    "isPositive": false
+  },
+  {
+    "id": 5,
+    "name": "DOGS",
+    "symbol": "DOGS",
+    "price": "$0.00014032",
+    "change": "+3.8%",
+    "mcap": "$76.5M",
+    "image": "https://via.placeholder.com/40x40/8B5CF6/FFFFFF?text=🐶",
+    "isPositive": true  
+  },
+  {
+    "id": 6,
+    "name": "STON",
+    "symbol": "STON", 
+    "price": "$0.72158",
+    "change": "+0.87%",
+    "mcap": "$72.2M",
+    "image": "https://via.placeholder.com/40x40/3B82F6/FFFFFF?text=💎",
+    "isPositive": true
   }
 ]
