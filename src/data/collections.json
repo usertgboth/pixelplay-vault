@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "name": "Pixel Dogs",
+    "supply": 5555,
+    "floor": "1.2 TON",
+    "volume": "15K TON",
+    "image": "https://via.placeholder.com/200x200/8B5CF6/FFFFFF?text=🐕",
+    "description": "Adorable pixel art dogs on the blockchain",
+    "items": 234
+  },
+  {
+    "id": 2,
+    "name": "NotPixel Wizards",
+    "supply": 3333,
+    "floor": "2.5 TON",
+    "volume": "9K TON", 
+    "image": "https://via.placeholder.com/200x200/10B981/FFFFFF?text=🧙",
+    "description": "Magical wizards casting spells in pixel art",
+    "items": 156
+  },
+  {
+    "id": 3,
+    "name": "Crypto Penguins",
+    "supply": 7777,
+    "floor": "0.8 TON",
+    "volume": "22K TON",
+    "image": "https://via.placeholder.com/200x200/F59E0B/FFFFFF?text=🐧",
+    "description": "Cool penguins living on the blockchain",
+    "items": 421
+  },
+  {
+    "id": 4,
+    "name": "Blum Heroes",
+    "supply": 2222,
+    "floor": "4.2 TON",
+    "volume": "6K TON",
+    "image": "https://via.placeholder.com/200x200/EF4444/FFFFFF?text=🦸",
+    "description": "Superhero characters in pixel art style",
+    "items": 89
+  }
+]

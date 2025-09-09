@@ -1,0 +1,54 @@
+[
+  {
+    "id": 1,
+    "name": "Pixel Dog #1234",
+    "collection": "Pixel Dogs",
+    "price": "1.5 TON",
+    "image": "https://via.placeholder.com/300x300/8B5CF6/FFFFFF?text=DOG1234",
+    "rarity": "Rare",
+    "attributes": [
+      {"trait": "Color", "value": "Purple"},
+      {"trait": "Hat", "value": "Cap"},
+      {"trait": "Eyes", "value": "Sunglasses"}
+    ]
+  },
+  {
+    "id": 2,
+    "name": "Wizard #567",
+    "collection": "NotPixel Wizards",
+    "price": "3.2 TON",
+    "image": "https://via.placeholder.com/300x300/10B981/FFFFFF?text=WIZ567",
+    "rarity": "Epic",
+    "attributes": [
+      {"trait": "Staff", "value": "Lightning"},
+      {"trait": "Robe", "value": "Green"},
+      {"trait": "Magic", "value": "Fire"}
+    ]
+  },
+  {
+    "id": 3,
+    "name": "Penguin #890",
+    "collection": "Crypto Penguins", 
+    "price": "0.9 TON",
+    "image": "https://via.placeholder.com/300x300/F59E0B/FFFFFF?text=PEN890",
+    "rarity": "Common",
+    "attributes": [
+      {"trait": "Scarf", "value": "Red"},
+      {"trait": "Flipper", "value": "Normal"},
+      {"trait": "Beak", "value": "Orange"}
+    ]
+  },
+  {
+    "id": 4,
+    "name": "Hero #123",
+    "collection": "Blum Heroes",
+    "price": "5.1 TON",
+    "image": "https://via.placeholder.com/300x300/EF4444/FFFFFF?text=HERO123",
+    "rarity": "Legendary",
+    "attributes": [
+      {"trait": "Power", "value": "Super Strength"},
+      {"trait": "Cape", "value": "Red"},
+      {"trait": "Mask", "value": "Black"}
+    ]
+  }
+]
