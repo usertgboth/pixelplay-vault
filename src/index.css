@@ -8,59 +8,67 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Core colors - Dark theme by default */
-    --background: 220 18% 6%;
-    --foreground: 210 40% 98%;
+    /* Core colors - Black-Blue theme with Orange accents */
+    --background: 240 10% 4%;
+    --foreground: 0 0% 98%;
 
-    --card: 220 25% 8%;
-    --card-foreground: 210 40% 98%;
+    --card: 240 15% 6%;
+    --card-foreground: 0 0% 98%;
 
-    --popover: 220 25% 8%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 240 15% 6%;
+    --popover-foreground: 0 0% 98%;
 
-    /* Brand colors - Pixel theme */
-    --primary: 259 84% 65%;
+    /* Brand colors - Black-Blue-Orange theme */
+    --primary: 220 91% 65%;
     --primary-foreground: 0 0% 100%;
-    --primary-glow: 259 100% 75%;
+    --primary-glow: 220 100% 75%;
 
-    --secondary: 217 33% 17%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 240 20% 10%;
+    --secondary-foreground: 0 0% 98%;
 
-    /* Accent colors for different sections */
-    --accent-market: 259 84% 65%;
-    --accent-games: 142 76% 36%; 
-    --accent-referrals: 43 96% 56%;
-    --accent-profile: 0 84% 60%;
+    /* Orange accent for highlights */
+    --accent-orange: 25 95% 53%;
+    --accent-orange-dark: 20 90% 45%;
+    
+    /* Blue variations */
+    --accent-blue-light: 220 91% 65%;
+    --accent-blue-dark: 220 85% 45%;
 
-    --muted: 217 33% 17%;
-    --muted-foreground: 215 20% 65%;
+    /* Accent colors unified with orange theme */
+    --accent-market: 25 95% 53%;
+    --accent-games: 25 95% 53%;
+    --accent-referrals: 25 95% 53%;
+    --accent-profile: 25 95% 53%;
 
-    --accent: 217 33% 17%;
-    --accent-foreground: 210 40% 98%;
+    --muted: 240 20% 10%;
+    --muted-foreground: 240 15% 65%;
+
+    --accent: 240 20% 10%;
+    --accent-foreground: 0 0% 98%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 217 33% 17%;
-    --input: 217 33% 17%;
-    --ring: 259 84% 65%;
+    --border: 240 20% 15%;
+    --input: 240 20% 10%;
+    --ring: 25 95% 53%;
 
     --radius: 0.75rem;
 
-    /* Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
-    --gradient-market: linear-gradient(135deg, hsl(259 84% 65%), hsl(220 100% 70%));
-    --gradient-games: linear-gradient(135deg, hsl(142 76% 36%), hsl(120 100% 25%));
-    --gradient-referrals: linear-gradient(135deg, hsl(43 96% 56%), hsl(38 92% 50%));
-    --gradient-profile: linear-gradient(135deg, hsl(0 84% 60%), hsl(340 82% 52%));
+    /* Gradients - Black-Blue-Orange theme */
+    --gradient-primary: linear-gradient(135deg, hsl(220 91% 65%), hsl(25 95% 53%));
+    --gradient-orange: linear-gradient(135deg, hsl(25 95% 53%), hsl(20 90% 45%));
+    --gradient-blue: linear-gradient(135deg, hsl(220 91% 65%), hsl(220 85% 45%));
+    --gradient-dark: linear-gradient(135deg, hsl(240 15% 6%), hsl(240 10% 4%));
 
     /* Shadows and effects */
-    --shadow-pixel: 0 0 20px hsl(var(--primary) / 0.5);
-    --shadow-glow: 0 0 40px hsl(var(--primary-glow) / 0.3);
+    --shadow-orange: 0 0 20px hsl(25 95% 53% / 0.3);
+    --shadow-blue: 0 0 20px hsl(220 91% 65% / 0.3);
+    --shadow-glow: 0 0 40px hsl(25 95% 53% / 0.2);
 
-    /* Pixel art specific */
-    --pixel-border: 2px;
-    --pixel-spacing: 0.25rem;
+    /* Theme specific */
+    --border-glow: 2px;
+    --spacing: 0.25rem;
   }
 }
 
@@ -75,78 +83,71 @@ All colors MUST be HSL.
 }
 
 @layer components {
-  /* Pixel button variants */
-  .btn-pixel {
-    @apply px-6 py-3 rounded-lg font-bold text-sm transition-all duration-200 shadow-lg;
-    image-rendering: pixelated;
+  /* Modern button variants with Orange-Blue theme */
+  .btn-modern {
+    @apply px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-200;
+    @apply border border-transparent focus:outline-none focus:ring-2 focus:ring-offset-2;
   }
 
-  .btn-market {
-    background: var(--gradient-market);
-    @apply text-white hover:scale-105 hover:shadow-glow;
+  .btn-primary {
+    @apply bg-accent-orange text-background hover:bg-accent-orange-dark;
+    @apply focus:ring-accent-orange;
+    box-shadow: var(--shadow-orange);
   }
 
-  .btn-games {
-    background: var(--gradient-games);
-    @apply text-white hover:scale-105;
+  .btn-secondary {
+    @apply bg-accent-blue-light text-white hover:bg-accent-blue-dark;
+    @apply focus:ring-accent-blue-light;
+    box-shadow: var(--shadow-blue);
   }
 
-  .btn-referrals {
-    background: var(--gradient-referrals);
-    @apply text-white hover:scale-105;
+  .btn-outline {
+    @apply border-accent-orange text-accent-orange hover:bg-accent-orange hover:text-background;
+    @apply focus:ring-accent-orange;
   }
 
-  .btn-profile {
-    background: var(--gradient-profile);
-    @apply text-white hover:scale-105;
+  /* Modern cards */
+  .card-modern {
+    @apply bg-card/80 backdrop-blur-sm border border-border rounded-2xl p-6;
+    @apply transition-all duration-300 hover:bg-card hover:border-accent-orange/30;
   }
 
-  /* Pixel cards */
-  .card-pixel {
-    @apply bg-card border border-border rounded-xl p-4 transition-all duration-300;
-    @apply hover:scale-105 hover:border-primary/50;
-    box-shadow: var(--shadow-pixel);
+  .card-glow {
+    @apply card-modern;
+    box-shadow: var(--shadow-glow);
   }
 
-  /* Pixel animations */
-  .float-animation {
-    animation: float 3s ease-in-out infinite;
+  /* Navigation styles */
+  .nav-item {
+    @apply flex flex-col items-center p-3 rounded-xl transition-all duration-200;
   }
 
-  .pulse-glow {
-    animation: pulse-glow 2s ease-in-out infinite;
+  .nav-item.active {
+    @apply bg-accent-orange/20 border border-accent-orange/30;
   }
 
-  .pixel-border {
-    border: 2px solid hsl(var(--border));
-    image-rendering: pixelated;
+  .nav-item:hover:not(.active) {
+    @apply bg-muted/50;
   }
 }
 
 @layer utilities {
-  .text-gradient-market {
-    background: var(--gradient-market);
+  .text-gradient-orange {
+    background: var(--gradient-orange);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
-  .text-gradient-games {
-    background: var(--gradient-games);
+  .text-gradient-blue {
+    background: var(--gradient-blue);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
-  .text-gradient-referrals {
-    background: var(--gradient-referrals);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .text-gradient-profile {
-    background: var(--gradient-profile);
+  .text-gradient-primary {
+    background: var(--gradient-primary);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -159,6 +160,11 @@ All colors MUST be HSL.
 }
 
 @keyframes pulse-glow {
-  0%, 100% { box-shadow: var(--shadow-pixel); }
+  0%, 100% { box-shadow: var(--shadow-orange); }
   50% { box-shadow: var(--shadow-glow); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }

@@ -1,43 +1,48 @@
+import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Home, Store, Gamepad2, Users, User } from 'lucide-react';
+import { Home, Store, Gamepad2, Users, User, LucideIcon } from 'lucide-react';
 
-const Navbar = () => {
+interface NavItem {
+  path: string;
+  icon: LucideIcon;
+  label: string;
+}
+
+const Navbar: React.FC = () => {
   const location = useLocation();
 
-  const navItems = [
-    { path: '/', icon: Home, label: 'Home', gradient: 'primary' },
-    { path: '/market', icon: Store, label: 'Market', gradient: 'market' },
-    { path: '/games', icon: Gamepad2, label: 'Games', gradient: 'games' },
-    { path: '/referrals', icon: Users, label: 'Referrals', gradient: 'referrals' },
-    { path: '/profile', icon: User, label: 'Profile', gradient: 'profile' },
+  const navItems: NavItem[] = [
+    { path: '/', icon: Home, label: 'Home' },
+    { path: '/market', icon: Store, label: 'Market' },
+    { path: '/games', icon: Gamepad2, label: 'Games' },
+    { path: '/referrals', icon: Users, label: 'Referrals' },
+    { path: '/profile', icon: User, label: 'Profile' },
   ];
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 bg-card border-t border-border z-50">
+    <nav className="fixed bottom-0 left-0 right-0 bg-card/95 backdrop-blur-sm border-t border-border z-50">
       <div className="flex justify-around items-center py-2 px-4 max-w-md mx-auto">
-        {navItems.map(({ path, icon: Icon, label, gradient }) => {
+        {navItems.map(({ path, icon: Icon, label }) => {
           const isActive = location.pathname === path;
           return (
             <Link
               key={path}
               to={path}
-              className={`flex flex-col items-center p-2 transition-all duration-200 ${
-                isActive ? 'scale-110' : 'hover:scale-105'
-              }`}
+              className={`nav-item ${isActive ? 'active' : ''}`}
             >
               <div className={`p-2 rounded-lg transition-all duration-200 ${
                 isActive 
-                  ? `bg-accent-${gradient} shadow-lg` 
-                  : 'hover:bg-muted'
+                  ? 'bg-accent-orange/20' 
+                  : 'hover:bg-muted/50'
               }`}>
                 <Icon 
                   size={20} 
-                  className={isActive ? 'text-white' : 'text-muted-foreground'}
+                  className={isActive ? 'text-accent-orange' : 'text-muted-foreground hover:text-foreground'}
                 />
               </div>
-              <span className={`text-xs mt-1 font-medium ${
+              <span className={`text-xs mt-1 font-medium transition-colors ${
                 isActive 
-                  ? `text-gradient-${gradient}` 
+                  ? 'text-accent-orange' 
                   : 'text-muted-foreground'
               }`}>
                 {label}

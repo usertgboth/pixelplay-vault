@@ -1,15 +1,15 @@
-import { useState } from 'react';
+import React from 'react';
 import { Users, Copy, Gift, Share2, ChevronRight, UserPlus2 } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import { useToast } from '@/hooks/use-toast';
 
-const Referrals = () => {
-  const [referralCode] = useState('ref_2MOQ2CC');
-  const [referrals] = useState(0);
-  const [bonusEarned] = useState(0);
+const Referrals: React.FC = () => {
+  const [referralCode] = React.useState('ref_2MOQ2CC');
+  const [referrals] = React.useState(0);
+  const [bonusEarned] = React.useState(0);
   const { toast } = useToast();
 
-  const copyReferralLink = () => {
+  const copyReferralLink = React.useCallback(() => {
     const referralLink = `https://t.me/PxlMintBot?startapp=${referralCode}`;
     navigator.clipboard.writeText(referralLink);
     toast({
@@ -17,9 +17,9 @@ const Referrals = () => {
       description: "Referral link copied to clipboard",
       duration: 2000,
     });
-  };
+  }, [referralCode, toast]);
 
-  const shareReferralLink = () => {
+  const shareReferralLink = React.useCallback(() => {
     const referralLink = `https://t.me/PxlMintBot?startapp=${referralCode}`;
     const text = encodeURIComponent("Join me on PxlMint and start earning rewards! 🎁");
     
@@ -30,49 +30,48 @@ const Referrals = () => {
         url: referralLink,
       });
     } else {
-      // Fallback for desktop - open Telegram
       window.open(`https://t.me/share/url?url=${encodeURIComponent(referralLink)}&text=${text}`, '_blank');
     }
-  };
+  }, [referralCode]);
 
-  const rewards = [
+  const rewards = React.useMemo(() => [
     { friends: 3, reward: "Limited NFT Pack", points: 100 },
     { friends: 5, reward: "Exclusive Avatar", points: 250 },
     { friends: 10, reward: "Premium Access", points: 500 },
     { friends: 25, reward: "Legendary NFT", points: 1000 },
     { friends: 50, reward: "VIP Status", points: 2500 },
-  ];
+  ], []);
 
   return (
     <div className="min-h-screen bg-background pb-20">
       <Navbar />
       
-      {/* Hero Section with Gradient */}
+      {/* Hero Section */}
       <div className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-accent-referrals/20 via-background to-background"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-accent-orange/10 via-background to-background"></div>
         <div className="relative px-6 py-12 text-center">
           {/* Icon Illustration */}
           <div className="mb-8 flex justify-center">
             <div className="relative">
-              <div className="flex items-center justify-center w-24 h-24 bg-accent-referrals/20 rounded-full mb-4">
-                <UserPlus2 size={40} className="text-accent-referrals" />
+              <div className="flex items-center justify-center w-24 h-24 bg-accent-orange/10 rounded-full mb-4 shadow-orange">
+                <UserPlus2 size={40} className="text-accent-orange" />
               </div>
-              <div className="absolute -top-2 -right-2 w-8 h-8 bg-accent-referrals rounded-full flex items-center justify-center">
+              <div className="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-br from-accent-orange to-accent-orange-dark rounded-full flex items-center justify-center shadow-orange">
                 <Gift size={16} className="text-background" />
               </div>
             </div>
           </div>
           
-          <h1 className="text-3xl font-bold text-foreground mb-3">
+          <h1 className="text-3xl font-bold text-gradient-primary mb-3">
             Gifts for Invites!
           </h1>
           <p className="text-muted-foreground text-lg mb-8 max-w-sm mx-auto">
             Invite your friends to PxlMint, or promote the link via social media
           </p>
           
-          {/* Gift Distribution Status */}
-          <div className="inline-flex items-center px-6 py-3 bg-card/80 backdrop-blur-sm border border-border rounded-full">
-            <Gift size={16} className="text-accent-referrals mr-2" />
+          {/* Status Badge */}
+          <div className="inline-flex items-center px-6 py-3 bg-card/80 backdrop-blur-sm border border-accent-orange/20 rounded-full">
+            <Gift size={16} className="text-accent-orange mr-2" />
             <span className="text-sm font-medium text-foreground">Gift distribution Soon</span>
           </div>
         </div>
@@ -80,7 +79,7 @@ const Referrals = () => {
 
       {/* Referral Link Section */}
       <div className="px-6 mb-8">
-        <div className="bg-card/80 backdrop-blur-sm border border-border rounded-2xl p-6">
+        <div className="card-modern">
           <div className="text-sm text-muted-foreground mb-2">Your referral link</div>
           <div className="flex items-center justify-between bg-muted/30 rounded-xl p-4 mb-6">
             <div className="flex-1 min-w-0">
@@ -90,16 +89,16 @@ const Referrals = () => {
             </div>
             <button 
               onClick={copyReferralLink}
-              className="ml-3 p-2 hover:bg-muted/50 rounded-lg transition-colors"
+              className="ml-3 p-2 hover:bg-accent-orange/10 rounded-lg transition-colors"
               title="Copy link"
             >
-              <Copy size={18} className="text-muted-foreground" />
+              <Copy size={18} className="text-accent-orange" />
             </button>
           </div>
           
           <button 
             onClick={shareReferralLink}
-            className="w-full bg-accent-referrals hover:bg-accent-referrals/90 text-background font-semibold py-4 rounded-xl transition-all duration-200 hover:scale-[1.02]"
+            className="btn-modern btn-primary w-full"
           >
             Share
           </button>
@@ -110,11 +109,11 @@ const Referrals = () => {
       <div className="px-6 mb-8">
         <div className="grid grid-cols-2 gap-4">
           <div className="bg-card/60 border border-border rounded-xl p-6 text-center">
-            <div className="text-2xl font-bold text-accent-referrals mb-1">{referrals}</div>
+            <div className="text-2xl font-bold text-accent-orange mb-1">{referrals}</div>
             <div className="text-sm text-muted-foreground">Referrals</div>
           </div>
           <div className="bg-card/60 border border-border rounded-xl p-6 text-center">
-            <div className="text-2xl font-bold text-primary mb-1">{bonusEarned}</div>
+            <div className="text-2xl font-bold text-accent-blue-light mb-1">{bonusEarned}</div>
             <div className="text-sm text-muted-foreground">Points Earned</div>
           </div>
         </div>
@@ -122,7 +121,7 @@ const Referrals = () => {
 
       {/* Referrals List */}
       <div className="px-6 mb-8">
-        <div className="bg-card/60 border border-border rounded-xl overflow-hidden">
+        <div className="card-modern">
           <div className="p-4 border-b border-border">
             <h3 className="font-semibold text-foreground">Referrals</h3>
           </div>
@@ -141,12 +140,12 @@ const Referrals = () => {
         <h2 className="text-lg font-semibold text-foreground mb-4">Milestone Rewards</h2>
         <div className="space-y-3">
           {rewards.map((reward, index) => (
-            <div key={index} className="bg-card/60 border border-border rounded-xl p-4">
+            <div key={index} className="card-modern">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-4">
                   <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${
                     referrals >= reward.friends 
-                      ? 'bg-accent-referrals/20 border border-accent-referrals/30' 
+                      ? 'bg-accent-orange/20 border border-accent-orange/30' 
                       : 'bg-muted/20'
                   }`}>
                     <span className="text-sm font-bold text-foreground">{reward.friends}</span>
@@ -160,7 +159,7 @@ const Referrals = () => {
                 </div>
                 
                 <div className="flex items-center gap-2">
-                  <span className="text-sm font-medium text-accent-referrals">
+                  <span className="text-sm font-medium text-accent-orange">
                     +{reward.points}
                   </span>
                   <ChevronRight size={16} className="text-muted-foreground" />
@@ -175,10 +174,10 @@ const Referrals = () => {
       <div className="px-6">
         <h2 className="text-lg font-semibold text-foreground mb-4">How it Works</h2>
         <div className="space-y-3">
-          <div className="bg-card/60 border border-border rounded-xl p-4">
+          <div className="card-modern">
             <div className="flex items-start gap-3">
-              <div className="w-6 h-6 bg-accent-referrals/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                <span className="text-xs font-bold text-accent-referrals">1</span>
+              <div className="w-6 h-6 bg-accent-orange/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                <span className="text-xs font-bold text-accent-orange">1</span>
               </div>
               <div>
                 <h3 className="font-medium text-foreground mb-1">Share Your Link</h3>
@@ -189,10 +188,10 @@ const Referrals = () => {
             </div>
           </div>
           
-          <div className="bg-card/60 border border-border rounded-xl p-4">
+          <div className="card-modern">
             <div className="flex items-start gap-3">
-              <div className="w-6 h-6 bg-accent-referrals/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                <span className="text-xs font-bold text-accent-referrals">2</span>
+              <div className="w-6 h-6 bg-accent-orange/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                <span className="text-xs font-bold text-accent-orange">2</span>
               </div>
               <div>
                 <h3 className="font-medium text-foreground mb-1">Friends Join</h3>
@@ -203,10 +202,10 @@ const Referrals = () => {
             </div>
           </div>
           
-          <div className="bg-card/60 border border-border rounded-xl p-4">
+          <div className="card-modern">
             <div className="flex items-start gap-3">
-              <div className="w-6 h-6 bg-accent-referrals/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                <span className="text-xs font-bold text-accent-referrals">3</span>
+              <div className="w-6 h-6 bg-accent-orange/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                <span className="text-xs font-bold text-accent-orange">3</span>
               </div>
               <div>
                 <h3 className="font-medium text-foreground mb-1">Earn Together</h3>
