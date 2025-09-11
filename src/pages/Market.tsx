@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
-import { Search, Filter, TrendingUp, TrendingDown } from 'lucide-react';
+import React, { useState, useCallback } from 'react';
+import { Search, Filter, TrendingUp, TrendingDown, ExternalLink, Heart } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, ResponsiveContainer, Area, AreaChart } from 'recharts';
 import Navbar from '@/components/Navbar';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { useToast } from '@/hooks/use-toast';
 import collections from '@/data/collections.json';
 import nftCollections from '@/data/nft-collections.json';
 
@@ -30,12 +31,59 @@ const priceData = [
 const Market: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [activeTab, setActiveTab] = useState('MCap');
+  const [favorites, setFavorites] = useState<string[]>([]);
+  const [showFilter, setShowFilter] = useState(false);
+  const { toast } = useToast();
 
   const filteredCollections = collections.filter(collection =>
     collection.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const tabs = ['MCap', 'Hot', 'New', 'Listings'];
+
+  const handleTokenClick = useCallback((tokenName: string) => {
+    toast({
+      title: "Token Selected",
+      description: `Opening ${tokenName} details...`,
+    });
+  }, [toast]);
+
+  const handleNFTClick = useCallback((nftName: string) => {
+    toast({
+      title: "NFT Collection",
+      description: `Viewing ${nftName} collection...`,
+    });
+  }, [toast]);
+
+  const handleFilter = useCallback(() => {
+    setShowFilter(!showFilter);
+    toast({
+      title: "Filter",
+      description: showFilter ? "Filter closed" : "Filter options opened",
+    });
+  }, [showFilter, toast]);
+
+  const toggleFavorite = useCallback((itemName: string) => {
+    setFavorites(prev => {
+      const newFavorites = prev.includes(itemName) 
+        ? prev.filter(name => name !== itemName)
+        : [...prev, itemName];
+      
+      toast({
+        title: prev.includes(itemName) ? "Removed from Favorites" : "Added to Favorites",
+        description: `${itemName} ${prev.includes(itemName) ? 'removed from' : 'added to'} your watchlist`,
+      });
+      
+      return newFavorites;
+    });
+  }, [toast]);
+
+  const handlePixelMint = useCallback(() => {
+    toast({
+      title: "Pixel Mint",
+      description: "Redirecting to minting page...",
+    });
+  }, [toast]);
 
   return (
     <div className="min-h-screen bg-background pb-20">
@@ -53,7 +101,10 @@ const Market: React.FC = () => {
 
 
         {/* Pixel Mint Launch Banner */}
-        <div className="card-modern mb-6 bg-gradient-to-r from-primary/10 to-accent/10 border-primary/20">
+        <div 
+          className="card-modern mb-6 bg-gradient-to-r from-primary/10 to-accent/10 border-primary/20 cursor-pointer hover:scale-[1.02] transition-transform"
+          onClick={handlePixelMint}
+        >
           <div className="text-center py-4">
             <div className="flex items-center justify-center gap-2 mb-2">
               <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
@@ -101,7 +152,7 @@ const Market: React.FC = () => {
               </button>
             ))}
           </div>
-          <Button variant="outline" size="sm">
+          <Button variant="outline" size="sm" onClick={handleFilter}>
             <Filter size={16} className="mr-1" />
             Filter
           </Button>
@@ -110,7 +161,11 @@ const Market: React.FC = () => {
         {/* Tokens List */}
         <div className="space-y-3 mb-6">
           {filteredCollections.slice(0, 10).map((collection, index) => (
-            <div key={index} className="card-modern">
+            <div 
+              key={index} 
+              className="card-modern cursor-pointer hover:scale-[1.01] transition-transform"
+              onClick={() => handleTokenClick(collection.name)}
+            >
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-3">
                   <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
@@ -125,13 +180,27 @@ const Market: React.FC = () => {
                     </p>
                   </div>
                 </div>
-                <div className="text-right">
-                  <div className="font-semibold text-foreground">${collection.price}</div>
-                  <div className={`text-sm ${
-                    collection.change.startsWith('+') ? 'text-green-500' : 'text-red-500'
-                  }`}>
-                    {collection.change}
+                <div className="flex items-center gap-3">
+                  <div className="text-right">
+                    <div className="font-semibold text-foreground">${collection.price}</div>
+                    <div className={`text-sm ${
+                      collection.change.startsWith('+') ? 'text-green-500' : 'text-red-500'
+                    }`}>
+                      {collection.change}
+                    </div>
                   </div>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      toggleFavorite(collection.name);
+                    }}
+                    className="p-1 hover:bg-primary/10 rounded-full transition-colors"
+                  >
+                    <Heart 
+                      size={16} 
+                      className={favorites.includes(collection.name) ? 'fill-red-500 text-red-500' : 'text-muted-foreground'} 
+                    />
+                  </button>
                 </div>
               </div>
             </div>
@@ -164,7 +233,11 @@ const Market: React.FC = () => {
           <h2 className="text-lg font-bold text-foreground mb-4">Trending NFTs</h2>
           <div className="space-y-3">
             {nftCollections.slice(0, 5).map((collection, index) => (
-              <div key={index} className="card-modern">
+              <div 
+                key={index} 
+                className="card-modern cursor-pointer hover:scale-[1.01] transition-transform"
+                onClick={() => handleNFTClick(collection.name)}
+              >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-3">
                     <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
@@ -182,9 +255,23 @@ const Market: React.FC = () => {
                       <p className="text-sm text-muted-foreground">by {collection.author}</p>
                     </div>
                   </div>
-                  <div className="text-right">
-                    <div className="font-semibold text-foreground">2.{index + 1} ETH</div>
-                    <div className="text-sm text-muted-foreground">{(Math.random() * 100).toFixed(1)} Vol</div>
+                  <div className="flex items-center gap-3">
+                    <div className="text-right">
+                      <div className="font-semibold text-foreground">2.{index + 1} ETH</div>
+                      <div className="text-sm text-muted-foreground">{(Math.random() * 100).toFixed(1)} Vol</div>
+                    </div>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        toast({
+                          title: "Opening Collection",
+                          description: `Viewing ${collection.name} on OpenSea...`,
+                        });
+                      }}
+                      className="p-1 hover:bg-primary/10 rounded-full transition-colors"
+                    >
+                      <ExternalLink size={16} className="text-muted-foreground" />
+                    </button>
                   </div>
                 </div>
               </div>
