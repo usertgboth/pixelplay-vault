@@ -52,32 +52,23 @@ const Market: React.FC = () => {
         </div>
 
 
-        {/* Market Stats */}
-        <div className="grid grid-cols-2 gap-4 mb-6">
-          <div className="card-modern">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-muted-foreground">Market Cap</p>
-                <p className="text-lg font-bold text-foreground">$2.47T</p>
+        {/* Pixel Mint Launch Banner */}
+        <div className="card-modern mb-6 bg-gradient-to-r from-primary/10 to-accent/10 border-primary/20">
+          <div className="text-center py-4">
+            <div className="flex items-center justify-center gap-2 mb-2">
+              <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
+                <span className="text-primary-foreground text-sm font-bold">🎨</span>
               </div>
-              <div className="text-green-500">
-                <TrendingUp size={20} />
-              </div>
+              <h2 className="text-xl font-bold text-foreground">Pixel Mint Launched!</h2>
             </div>
-            <div className="text-xs text-green-500 mt-1">+1.2% (24h)</div>
-          </div>
-          
-          <div className="card-modern">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-muted-foreground">24h Volume</p>
-                <p className="text-lg font-bold text-foreground">$89.2B</p>
-              </div>
-              <div className="text-red-500">
-                <TrendingDown size={20} />
-              </div>
+            <p className="text-sm text-muted-foreground mb-3">
+              Exclusive pixel art collection now available for minting
+            </p>
+            <div className="flex items-center justify-center gap-4 text-sm">
+              <div className="text-primary font-semibold">Starting at 0.1 ETH</div>
+              <div className="text-muted-foreground">•</div>
+              <div className="text-muted-foreground">Limited Supply: 1000</div>
             </div>
-            <div className="text-xs text-red-500 mt-1">-3.1% (24h)</div>
           </div>
         </div>
 
