@@ -1,222 +1,250 @@
-import React from 'react';
-import { Users, Copy, Gift, Share2, ChevronRight, UserPlus2 } from 'lucide-react';
+import React, { useState } from 'react';
+import { Share2, Copy, Users, Gift, Star, Crown, Trophy } from 'lucide-react';
 import Navbar from '@/components/Navbar';
-import { useToast } from '@/hooks/use-toast';
+import { Button } from '@/components/ui/button';
+import { Progress } from '@/components/ui/progress';
+import { toast } from '@/hooks/use-toast';
 
 const Referrals: React.FC = () => {
-  const [referralCode] = React.useState('ref_2MOQ2CC');
-  const [referrals] = React.useState(0);
-  const [bonusEarned] = React.useState(0);
-  const { toast } = useToast();
+  const [referralCode] = useState('CRYPTO2024');
+  const [referralStats] = useState({
+    totalReferrals: 23,
+    activeReferrals: 18,
+    totalEarned: 1.47,
+    thisMonth: 0.32,
+  });
 
-  const copyReferralLink = React.useCallback(() => {
-    const referralLink = `https://t.me/PxlMintBot?startapp=${referralCode}`;
-    navigator.clipboard.writeText(referralLink);
+  const [referralList] = useState([
+    { username: 'Alice_Crypto', joinDate: '2024-01-15', status: 'Active', earned: 0.15 },
+    { username: 'Bob_Trader', joinDate: '2024-01-12', status: 'Active', earned: 0.25 },
+    { username: 'Charlie_NFT', joinDate: '2024-01-08', status: 'Inactive', earned: 0.05 },
+    { username: 'Diana_DeFi', joinDate: '2024-01-05', status: 'Active', earned: 0.35 },
+  ]);
+
+  const milestones = [
+    { count: 5, reward: '0.1 ETH', completed: true, icon: '🎯' },
+    { count: 10, reward: '0.25 ETH', completed: true, icon: '🏆' },
+    { count: 25, reward: '0.5 ETH', completed: false, icon: '💎' },
+    { count: 50, reward: '1 ETH', completed: false, icon: '👑' },
+  ];
+
+  const copyReferralLink = () => {
+    const link = `https://pixelvault.app/ref/${referralCode}`;
+    navigator.clipboard.writeText(link);
     toast({
       title: "Link Copied!",
       description: "Referral link copied to clipboard",
-      duration: 2000,
     });
-  }, [referralCode, toast]);
+  };
 
-  const shareReferralLink = React.useCallback(() => {
-    const referralLink = `https://t.me/PxlMintBot?startapp=${referralCode}`;
-    const text = encodeURIComponent("Join me on PxlMint and start earning rewards! 🎁");
+  const shareReferralLink = () => {
+    const link = `https://pixelvault.app/ref/${referralCode}`;
+    const text = `Join me on PixelVault and start trading crypto & NFTs! Use my referral link: ${link}`;
     
     if (navigator.share) {
       navigator.share({
-        title: 'Join PxlMint',
-        text: 'Join me on PxlMint and start earning rewards!',
-        url: referralLink,
+        title: 'Join PixelVault',
+        text: text,
+        url: link,
       });
     } else {
-      window.open(`https://t.me/share/url?url=${encodeURIComponent(referralLink)}&text=${text}`, '_blank');
+      navigator.clipboard.writeText(text);
+      toast({
+        title: "Text Copied!",
+        description: "Share message copied to clipboard",
+      });
     }
-  }, [referralCode]);
-
-  const rewards = React.useMemo(() => [
-    { friends: 3, reward: "Limited NFT Pack", points: 100 },
-    { friends: 5, reward: "Exclusive Avatar", points: 250 },
-    { friends: 10, reward: "Premium Access", points: 500 },
-    { friends: 25, reward: "Legendary NFT", points: 1000 },
-    { friends: 50, reward: "VIP Status", points: 2500 },
-  ], []);
+  };
 
   return (
     <div className="min-h-screen bg-background pb-20">
-      <Navbar />
-      
-      {/* Hero Section */}
-      <div className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-accent-orange/10 via-background to-background"></div>
-        <div className="relative px-6 py-12 text-center">
-          {/* Icon Illustration */}
-          <div className="mb-8 flex justify-center">
-            <div className="relative">
-              <div className="flex items-center justify-center w-24 h-24 bg-accent-orange/10 rounded-full mb-4 shadow-orange">
-                <UserPlus2 size={40} className="text-accent-orange" />
-              </div>
-              <div className="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-br from-accent-orange to-accent-orange-dark rounded-full flex items-center justify-center shadow-orange">
-                <Gift size={16} className="text-background" />
-              </div>
-            </div>
+      <div className="px-4 pt-6">
+        {/* Header */}
+        <div className="text-center mb-6">
+          <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-primary to-accent-blue-dark flex items-center justify-center">
+            <Users size={32} className="text-white" />
           </div>
-          
-          <h1 className="text-3xl font-bold text-gradient-primary mb-3">
-            Gifts for Invites!
-          </h1>
-          <p className="text-muted-foreground text-lg mb-8 max-w-sm mx-auto">
-            Invite your friends to PxlMint, or promote the link via social media
-          </p>
-          
-          {/* Status Badge */}
-          <div className="inline-flex items-center px-6 py-3 bg-card/80 backdrop-blur-sm border border-accent-orange/20 rounded-full">
-            <Gift size={16} className="text-accent-orange mr-2" />
-            <span className="text-sm font-medium text-foreground">Gift distribution Soon</span>
+          <h1 className="text-2xl font-bold text-foreground mb-2">Referral Program</h1>
+          <p className="text-muted-foreground">Earn rewards by inviting friends</p>
+        </div>
+
+        {/* Stats Cards */}
+        <div className="grid grid-cols-2 gap-3 mb-6">
+          <div className="card-modern text-center">
+            <div className="text-2xl font-bold text-foreground">{referralStats.totalReferrals}</div>
+            <div className="text-sm text-muted-foreground">Total Referrals</div>
+          </div>
+          <div className="card-modern text-center">
+            <div className="text-2xl font-bold text-foreground">{referralStats.totalEarned} ETH</div>
+            <div className="text-sm text-muted-foreground">Total Earned</div>
+          </div>
+          <div className="card-modern text-center">
+            <div className="text-2xl font-bold text-foreground">{referralStats.activeReferrals}</div>
+            <div className="text-sm text-muted-foreground">Active Users</div>
+          </div>
+          <div className="card-modern text-center">
+            <div className="text-2xl font-bold text-foreground">{referralStats.thisMonth} ETH</div>
+            <div className="text-sm text-muted-foreground">This Month</div>
           </div>
         </div>
-      </div>
 
-      {/* Referral Link Section */}
-      <div className="px-6 mb-8">
-        <div className="card-modern">
-          <div className="text-sm text-muted-foreground mb-2">Your referral link</div>
-          <div className="flex items-center justify-between bg-muted/30 rounded-xl p-4 mb-6">
-            <div className="flex-1 min-w-0">
-              <div className="text-sm font-mono text-foreground truncate">
-                https://t.me/PxlMintBot?startapp={referralCode}
-              </div>
-            </div>
-            <button 
+        {/* Referral Link */}
+        <div className="card-modern mb-6">
+          <h3 className="font-semibold text-foreground mb-4">Your Referral Link</h3>
+          <div className="flex items-center gap-2 p-3 bg-secondary rounded-xl mb-4">
+            <code className="flex-1 text-sm text-foreground font-mono">
+              pixelvault.app/ref/{referralCode}
+            </code>
+            <Button 
+              variant="ghost" 
+              size="sm" 
               onClick={copyReferralLink}
-              className="ml-3 p-2 hover:bg-accent-orange/10 rounded-lg transition-colors"
-              title="Copy link"
+              className="h-8 w-8 p-0"
             >
-              <Copy size={18} className="text-accent-orange" />
-            </button>
+              <Copy size={16} />
+            </Button>
           </div>
-          
-          <button 
-            onClick={shareReferralLink}
-            className="btn-modern btn-primary w-full"
+          <Button 
+            onClick={shareReferralLink} 
+            className="w-full"
+            size="lg"
           >
-            Share
-          </button>
+            <Share2 size={20} className="mr-2" />
+            Share Referral Link
+          </Button>
         </div>
-      </div>
 
-      {/* Stats Section */}
-      <div className="px-6 mb-8">
-        <div className="grid grid-cols-2 gap-4">
-          <div className="bg-card/60 border border-border rounded-xl p-6 text-center">
-            <div className="text-2xl font-bold text-accent-orange mb-1">{referrals}</div>
-            <div className="text-sm text-muted-foreground">Referrals</div>
-          </div>
-          <div className="bg-card/60 border border-border rounded-xl p-6 text-center">
-            <div className="text-2xl font-bold text-accent-blue-light mb-1">{bonusEarned}</div>
-            <div className="text-sm text-muted-foreground">Points Earned</div>
-          </div>
-        </div>
-      </div>
-
-      {/* Referrals List */}
-      <div className="px-6 mb-8">
-        <div className="card-modern">
-          <div className="p-4 border-b border-border">
-            <h3 className="font-semibold text-foreground">Referrals</h3>
-          </div>
-          <div className="p-6 text-center">
-            <Users size={32} className="text-muted-foreground mx-auto mb-3 opacity-50" />
-            <p className="text-muted-foreground">No referrals yet</p>
-            <p className="text-sm text-muted-foreground mt-1">
-              Share your link to start earning rewards
-            </p>
-          </div>
-        </div>
-      </div>
-
-      {/* Rewards System */}
-      <div className="px-6 mb-8">
-        <h2 className="text-lg font-semibold text-foreground mb-4">Milestone Rewards</h2>
-        <div className="space-y-3">
-          {rewards.map((reward, index) => (
-            <div key={index} className="card-modern">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-4">
-                  <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${
-                    referrals >= reward.friends 
-                      ? 'bg-accent-orange/20 border border-accent-orange/30' 
-                      : 'bg-muted/20'
+        {/* Milestones */}
+        <div className="card-modern mb-6">
+          <h3 className="font-semibold text-foreground mb-4">Milestone Rewards</h3>
+          <div className="space-y-4">
+            {milestones.map((milestone, index) => (
+              <div 
+                key={index} 
+                className={`flex items-center justify-between p-3 rounded-xl border ${
+                  milestone.completed 
+                    ? 'bg-primary/5 border-primary/20' 
+                    : 'bg-secondary border-border'
+                }`}
+              >
+                <div className="flex items-center gap-3">
+                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${
+                    milestone.completed 
+                      ? 'bg-primary/20 text-primary' 
+                      : 'bg-muted text-muted-foreground'
                   }`}>
-                    <span className="text-sm font-bold text-foreground">{reward.friends}</span>
+                    {milestone.completed ? <Trophy size={20} /> : <span className="text-lg">{milestone.icon}</span>}
                   </div>
                   <div>
-                    <h3 className="font-medium text-foreground">
-                      Invite {reward.friends} friends
-                    </h3>
-                    <p className="text-sm text-muted-foreground">{reward.reward}</p>
+                    <div className="font-medium text-foreground">{milestone.count} Referrals</div>
+                    <div className="text-sm text-muted-foreground">Reward: {milestone.reward}</div>
                   </div>
                 </div>
-                
-                <div className="flex items-center gap-2">
-                  <span className="text-sm font-medium text-accent-orange">
-                    +{reward.points}
-                  </span>
-                  <ChevronRight size={16} className="text-muted-foreground" />
+                {milestone.completed && (
+                  <div className="text-primary font-medium">✓ Claimed</div>
+                )}
+              </div>
+            ))}
+          </div>
+          
+          <div className="mt-4">
+            <div className="flex justify-between text-sm mb-2">
+              <span className="text-muted-foreground">Progress to next milestone</span>
+              <span className="text-muted-foreground">{referralStats.totalReferrals}/25</span>
+            </div>
+            <Progress value={(referralStats.totalReferrals / 25) * 100} className="h-2" />
+          </div>
+        </div>
+
+        {/* How it works */}
+        <div className="card-modern mb-6">
+          <h3 className="font-semibold text-foreground mb-4">How it works</h3>
+          <div className="space-y-3">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                <span className="text-primary text-sm font-bold">1</span>
+              </div>
+              <p className="text-sm text-muted-foreground">Share your referral link with friends</p>
+            </div>
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                <span className="text-primary text-sm font-bold">2</span>
+              </div>
+              <p className="text-sm text-muted-foreground">They sign up and start trading</p>
+            </div>
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                <span className="text-primary text-sm font-bold">3</span>
+              </div>
+              <p className="text-sm text-muted-foreground">You earn 10% of their trading fees</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Referral List */}
+        <div className="card-modern mb-6">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="font-semibold text-foreground">Recent Referrals</h3>
+            <Button variant="ghost" size="sm">View All</Button>
+          </div>
+          <div className="space-y-3">
+            {referralList.map((referral, index) => (
+              <div key={index} className="flex items-center justify-between p-3 rounded-xl bg-secondary">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
+                    <span className="text-primary font-bold text-sm">
+                      {referral.username.charAt(0)}
+                    </span>
+                  </div>
+                  <div>
+                    <div className="font-medium text-foreground">{referral.username}</div>
+                    <div className="text-sm text-muted-foreground">
+                      Joined {new Date(referral.joinDate).toLocaleDateString()}
+                    </div>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <div className="font-semibold text-foreground">+{referral.earned} ETH</div>
+                  <div className={`text-xs ${
+                    referral.status === 'Active' ? 'text-green-500' : 'text-muted-foreground'
+                  }`}>
+                    {referral.status}
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-      </div>
 
-      {/* How it Works */}
-      <div className="px-6">
-        <h2 className="text-lg font-semibold text-foreground mb-4">How it Works</h2>
-        <div className="space-y-3">
-          <div className="card-modern">
-            <div className="flex items-start gap-3">
-              <div className="w-6 h-6 bg-accent-orange/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                <span className="text-xs font-bold text-accent-orange">1</span>
+        {/* Leaderboard */}
+        <div className="card-modern mb-6">
+          <h3 className="font-semibold text-foreground mb-4">Top Referrers</h3>
+          <div className="space-y-2">
+            {[
+              { rank: 1, username: 'CryptoKing', referrals: 156, icon: '👑' },
+              { rank: 2, username: 'NFTQueen', referrals: 142, icon: '🥈' },
+              { rank: 3, username: 'TraderPro', referrals: 128, icon: '🥉' },
+              { rank: 4, username: 'You', referrals: referralStats.totalReferrals, icon: '⭐' },
+            ].map((user, index) => (
+              <div key={index} className={`flex items-center justify-between p-2 rounded-lg ${
+                user.username === 'You' ? 'bg-primary/5' : 'bg-secondary/50'
+              }`}>
+                <div className="flex items-center gap-3">
+                  <span className="text-lg">{user.icon}</span>
+                  <div>
+                    <div className={`font-medium ${user.username === 'You' ? 'text-primary' : 'text-foreground'}`}>
+                      {user.username}
+                    </div>
+                    <div className="text-sm text-muted-foreground">#{user.rank} • {user.referrals} referrals</div>
+                  </div>
+                </div>
               </div>
-              <div>
-                <h3 className="font-medium text-foreground mb-1">Share Your Link</h3>
-                <p className="text-sm text-muted-foreground">
-                  Send your referral link to friends via Telegram or social media
-                </p>
-              </div>
-            </div>
-          </div>
-          
-          <div className="card-modern">
-            <div className="flex items-start gap-3">
-              <div className="w-6 h-6 bg-accent-orange/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                <span className="text-xs font-bold text-accent-orange">2</span>
-              </div>
-              <div>
-                <h3 className="font-medium text-foreground mb-1">Friends Join</h3>
-                <p className="text-sm text-muted-foreground">
-                  When they sign up using your link, both of you get rewards
-                </p>
-              </div>
-            </div>
-          </div>
-          
-          <div className="card-modern">
-            <div className="flex items-start gap-3">
-              <div className="w-6 h-6 bg-accent-orange/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                <span className="text-xs font-bold text-accent-orange">3</span>
-              </div>
-              <div>
-                <h3 className="font-medium text-foreground mb-1">Earn Together</h3>
-                <p className="text-sm text-muted-foreground">
-                  Active friends unlock milestone rewards and bonus points for you
-                </p>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </div>
+      
+      <Navbar />
     </div>
   );
 };

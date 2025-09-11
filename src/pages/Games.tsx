@@ -1,162 +1,293 @@
-import { useState } from 'react';
-import { Gamepad2, Zap, Trophy, Gift } from 'lucide-react';
+import React, { useState } from 'react';
+import { Play, Trophy, Clock, Users, Star, Zap } from 'lucide-react';
 import Navbar from '@/components/Navbar';
-import { useToast } from '@/hooks/use-toast';
-import nftsData from '@/data/nfts.json';
+import { Button } from '@/components/ui/button';
+import { Progress } from '@/components/ui/progress';
+import { Badge } from '@/components/ui/badge';
 
-const Games = () => {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [minedNFTs, setMinedNFTs] = useState<any[]>([]);
-  const [clicks, setClicks] = useState(0);
-  const { toast } = useToast();
+const Games: React.FC = () => {
+  const [activeTab, setActiveTab] = useState('featured');
 
-  const mineNFT = () => {
-    if (isPlaying) return;
-    
-    setIsPlaying(true);
-    setClicks(prev => prev + 1);
+  const games = [
+    {
+      id: 1,
+      title: 'CryptoRacing',
+      category: 'Racing',
+      image: '/placeholder.svg',
+      players: 12847,
+      rating: 4.8,
+      earnings: '0.05 ETH/day',
+      status: 'live',
+      difficulty: 'Easy',
+      playTime: '5-10 min'
+    },
+    {
+      id: 2,
+      title: 'NFT Battle Arena',
+      category: 'Strategy',
+      image: '/placeholder.svg',
+      players: 8432,
+      rating: 4.9,
+      earnings: '0.12 ETH/day',
+      status: 'tournament',
+      difficulty: 'Hard',
+      playTime: '15-30 min'
+    },
+    {
+      id: 3,
+      title: 'DeFi Farm Simulator',
+      category: 'Simulation',
+      image: '/placeholder.svg',
+      players: 15623,
+      rating: 4.6,
+      earnings: '0.08 ETH/day',
+      status: 'new',
+      difficulty: 'Medium',
+      playTime: '10-20 min'
+    },
+    {
+      id: 4,
+      title: 'Pixel Mining',
+      category: 'Idle',
+      image: '/placeholder.svg',
+      players: 23456,
+      rating: 4.7,
+      earnings: '0.03 ETH/day',
+      status: 'live',
+      difficulty: 'Easy',
+      playTime: '1-2 min'
+    }
+  ];
 
-    // Animation delay
-    setTimeout(() => {
-      const randomNFT = nftsData[Math.floor(Math.random() * nftsData.length)];
-      setMinedNFTs(prev => [...prev, randomNFT]);
-      
-      toast({
-        title: "🎉 NFT Mined!",
-        description: `You found ${randomNFT.name}!`,
-        duration: 3000,
-      });
-      
-      setIsPlaying(false);
-    }, 1500);
+  const dailyQuests = [
+    { id: 1, title: 'Play 3 games', progress: 2, max: 3, reward: '0.01 ETH' },
+    { id: 2, title: 'Win 5 matches', progress: 3, max: 5, reward: '0.025 ETH' },
+    { id: 3, title: 'Earn 100 XP', progress: 75, max: 100, reward: '0.015 ETH' },
+  ];
+
+  const achievements = [
+    { id: 1, title: 'First Victory', description: 'Win your first game', unlocked: true, icon: '🏆' },
+    { id: 2, title: 'Speed Demon', description: 'Win 10 racing games', unlocked: true, icon: '🏎️' },
+    { id: 3, title: 'NFT Master', description: 'Collect 50 NFTs', unlocked: false, icon: '🎨' },
+    { id: 4, title: 'Strategist', description: 'Win 25 strategy games', unlocked: false, icon: '🧠' },
+  ];
+
+  const tabs = ['featured', 'racing', 'strategy', 'idle'];
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'live': return 'bg-green-500/10 text-green-500';
+      case 'tournament': return 'bg-primary/10 text-primary';
+      case 'new': return 'bg-yellow-500/10 text-yellow-600';
+      default: return 'bg-muted text-muted-foreground';
+    }
+  };
+
+  const getDifficultyColor = (difficulty: string) => {
+    switch (difficulty) {
+      case 'Easy': return 'text-green-500';
+      case 'Medium': return 'text-yellow-500';
+      case 'Hard': return 'text-red-500';
+      default: return 'text-muted-foreground';
+    }
   };
 
   return (
     <div className="min-h-screen bg-background pb-20">
-      <Navbar />
-      
-      {/* Header */}
-      <header className="px-4 py-6">
-        <div className="flex items-center gap-2 mb-2">
-          <Gamepad2 size={24} className="text-accent-games" />
-          <h1 className="text-2xl font-bold text-gradient-games">Pixel Games</h1>
-        </div>
-        <p className="text-muted-foreground">Click to mine NFTs and earn rewards</p>
-      </header>
-
-      {/* Game Stats */}
-      <div className="px-4 mb-6">
-        <div className="grid grid-cols-3 gap-3">
-          <div className="card-pixel text-center">
-            <div className="text-lg font-bold text-accent-games">{clicks}</div>
-            <div className="text-xs text-muted-foreground">Clicks</div>
+      <div className="px-4 pt-6">
+        {/* Header */}
+        <div className="flex items-center justify-between mb-6">
+          <div>
+            <h1 className="text-2xl font-bold text-foreground">Games</h1>
+            <p className="text-sm text-muted-foreground mt-1">Play & Earn Crypto</p>
           </div>
-          <div className="card-pixel text-center">
-            <div className="text-lg font-bold text-primary">{minedNFTs.length}</div>
-            <div className="text-xs text-muted-foreground">NFTs Mined</div>
-          </div>
-          <div className="card-pixel text-center">
-            <div className="text-lg font-bold text-accent-referrals">Level 1</div>
-            <div className="text-xs text-muted-foreground">Miner Level</div>
+          <div className="bg-primary/10 rounded-xl px-3 py-1.5">
+            <span className="text-primary text-sm font-medium">24 Online</span>
           </div>
         </div>
-      </div>
 
-      {/* Mining Game */}
-      <div className="px-4 mb-8">
-        <div className="card-pixel text-center py-8">
-          <h2 className="text-xl font-bold text-foreground mb-4">Click-to-Mine NFT</h2>
-          
-          <div className="relative mb-6">
-            <button
-              onClick={mineNFT}
-              disabled={isPlaying}
-              className={`w-32 h-32 mx-auto rounded-xl transition-all duration-300 ${
-                isPlaying 
-                  ? 'bg-primary/50 scale-95 animate-pulse' 
-                  : 'bg-primary hover:bg-primary-glow hover:scale-105 active:scale-95'
-              } flex items-center justify-center cursor-pointer disabled:cursor-not-allowed`}
-            >
-              <div className="text-4xl">
-                {isPlaying ? '⚡' : '💎'}
-              </div>
-            </button>
-            
-            {isPlaying && (
-              <div className="absolute -inset-4 border-2 border-primary rounded-xl animate-ping"></div>
-            )}
+        {/* Player Stats */}
+        <div className="grid grid-cols-3 gap-3 mb-6">
+          <div className="card-modern text-center">
+            <div className="text-lg font-bold text-foreground">847</div>
+            <div className="text-xs text-muted-foreground">Games Played</div>
           </div>
-          
-          <p className="text-muted-foreground mb-2">
-            {isPlaying ? 'Mining NFT...' : 'Click the crystal to mine NFT!'}
-          </p>
-          
-          <div className="btn-pixel btn-games inline-flex items-center gap-2">
-            <Zap size={16} />
-            {isPlaying ? 'Mining...' : 'Ready to Mine'}
+          <div className="card-modern text-center">
+            <div className="text-lg font-bold text-foreground">2.47 ETH</div>
+            <div className="text-xs text-muted-foreground">Total Earned</div>
+          </div>
+          <div className="card-modern text-center">
+            <div className="text-lg font-bold text-foreground">78%</div>
+            <div className="text-xs text-muted-foreground">Win Rate</div>
           </div>
         </div>
-      </div>
 
-      {/* Recent Mines */}
-      {minedNFTs.length > 0 && (
-        <div className="px-4 mb-6">
-          <div className="flex items-center gap-2 mb-4">
-            <Trophy size={20} className="text-accent-referrals" />
-            <h2 className="text-lg font-bold text-foreground">Your Mined NFTs</h2>
+        {/* Daily Quests */}
+        <div className="card-modern mb-6">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="font-semibold text-foreground">Daily Quests</h3>
+            <Badge variant="secondary">
+              <Clock size={12} className="mr-1" />
+              18h left
+            </Badge>
           </div>
-          
           <div className="space-y-3">
-            {minedNFTs.slice(-3).reverse().map((nft, index) => (
-              <div key={index} className="card-pixel flex items-center gap-4 float-animation">
-                <img 
-                  src={nft.image} 
-                  alt={nft.name}
-                  className="w-16 h-16 rounded-lg object-cover"
-                />
-                <div className="flex-1">
-                  <h3 className="font-semibold text-foreground">{nft.name}</h3>
-                  <p className="text-sm text-muted-foreground">{nft.collection}</p>
-                  <p className="text-sm text-primary font-semibold">{nft.price}</p>
+            {dailyQuests.map((quest) => (
+              <div key={quest.id} className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-foreground">{quest.title}</span>
+                  <span className="text-sm font-medium text-primary">{quest.reward}</span>
                 </div>
-                <div className="btn-pixel btn-games text-sm px-3 py-1">
-                  <Gift size={14} className="mr-1" />
-                  Collect
+                <div className="flex items-center gap-2">
+                  <Progress value={(quest.progress / quest.max) * 100} className="flex-1 h-2" />
+                  <span className="text-xs text-muted-foreground">{quest.progress}/{quest.max}</span>
                 </div>
               </div>
             ))}
           </div>
         </div>
-      )}
 
-      {/* Game Modes */}
-      <div className="px-4">
-        <h2 className="text-lg font-bold text-foreground mb-4">Game Modes</h2>
-        
-        <div className="space-y-3">
-          <div className="card-pixel flex items-center gap-4">
-            <div className="w-12 h-12 bg-accent-games/20 rounded-lg flex items-center justify-center">
-              <Zap size={20} className="text-accent-games" />
+        {/* Game Categories */}
+        <div className="flex bg-secondary rounded-xl p-1 mb-6">
+          {tabs.map((tab) => (
+            <button
+              key={tab}
+              onClick={() => setActiveTab(tab)}
+              className={`flex-1 py-2 px-3 rounded-lg text-sm font-medium transition-all capitalize ${
+                activeTab === tab
+                  ? 'bg-primary text-primary-foreground shadow-sm'
+                  : 'text-muted-foreground hover:text-foreground'
+              }`}
+            >
+              {tab}
+            </button>
+          ))}
+        </div>
+
+        {/* Featured Game */}
+        <div className="card-modern mb-6 overflow-hidden">
+          <div className="relative">
+            <div className="h-32 bg-gradient-to-br from-primary/20 to-accent-blue-dark/20 rounded-xl mb-4 flex items-center justify-center">
+              <Play size={32} className="text-primary" />
             </div>
-            <div className="flex-1">
-              <h3 className="font-semibold text-foreground">Speed Mining</h3>
-              <p className="text-sm text-muted-foreground">Mine NFTs as fast as you can</p>
-            </div>
-            <div className="text-sm text-accent-referrals font-semibold">Coming Soon</div>
+            <Badge className="absolute top-2 right-2 bg-green-500">
+              <Zap size={12} className="mr-1" />
+              Live Tournament
+            </Badge>
           </div>
-          
-          <div className="card-pixel flex items-center gap-4">
-            <div className="w-12 h-12 bg-accent-market/20 rounded-lg flex items-center justify-center">
-              <Trophy size={20} className="text-accent-market" />
+          <h3 className="font-bold text-foreground mb-2">Weekly Championship</h3>
+          <p className="text-sm text-muted-foreground mb-3">
+            Compete for the ultimate prize pool of 10 ETH. Top 100 players qualify!
+          </p>
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-4">
+              <div className="text-sm">
+                <span className="text-muted-foreground">Prize Pool:</span>
+                <span className="font-semibold text-foreground ml-1">10 ETH</span>
+              </div>
+              <div className="text-sm">
+                <span className="text-muted-foreground">Players:</span>
+                <span className="font-semibold text-foreground ml-1">1,247</span>
+              </div>
             </div>
-            <div className="flex-1">
-              <h3 className="font-semibold text-foreground">Tournament Mode</h3>
-              <p className="text-sm text-muted-foreground">Compete with other players</p>
+          </div>
+          <Button className="w-full" size="lg">
+            <Trophy size={20} className="mr-2" />
+            Join Tournament
+          </Button>
+        </div>
+
+        {/* Games Grid */}
+        <div className="space-y-4 mb-6">
+          {games.map((game) => (
+            <div key={game.id} className="card-modern">
+              <div className="flex gap-4">
+                <div className="w-20 h-20 rounded-xl bg-gradient-to-br from-primary/20 to-accent-blue-dark/20 flex items-center justify-center flex-shrink-0">
+                  <Play size={24} className="text-primary" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center justify-between mb-2">
+                    <h3 className="font-semibold text-foreground truncate">{game.title}</h3>
+                    <Badge variant="secondary" className={getStatusColor(game.status)}>
+                      {game.status}
+                    </Badge>
+                  </div>
+                  
+                  <div className="flex items-center gap-4 mb-2">
+                    <div className="flex items-center gap-1">
+                      <Star size={14} className="text-yellow-500" />
+                      <span className="text-sm text-foreground">{game.rating}</span>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <Users size={14} className="text-muted-foreground" />
+                      <span className="text-sm text-muted-foreground">{game.players.toLocaleString()}</span>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <Clock size={14} className="text-muted-foreground" />
+                      <span className="text-sm text-muted-foreground">{game.playTime}</span>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <div className="text-sm text-muted-foreground">Earning potential</div>
+                      <div className="font-semibold text-primary">{game.earnings}</div>
+                    </div>
+                    <div className="text-right">
+                      <div className={`text-sm ${getDifficultyColor(game.difficulty)}`}>
+                        {game.difficulty}
+                      </div>
+                      <Button size="sm" className="mt-1">
+                        <Play size={14} className="mr-1" />
+                        Play
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div className="text-sm text-accent-referrals font-semibold">Coming Soon</div>
+          ))}
+        </div>
+
+        {/* Achievements */}
+        <div className="card-modern mb-6">
+          <h3 className="font-semibold text-foreground mb-4">Achievements</h3>
+          <div className="grid grid-cols-2 gap-3">
+            {achievements.map((achievement) => (
+              <div 
+                key={achievement.id} 
+                className={`p-3 rounded-xl border text-center ${
+                  achievement.unlocked 
+                    ? 'bg-primary/5 border-primary/20' 
+                    : 'bg-secondary border-border opacity-60'
+                }`}
+              >
+                <div className="text-2xl mb-2">{achievement.icon}</div>
+                <div className="font-medium text-foreground text-sm">{achievement.title}</div>
+                <div className="text-xs text-muted-foreground">{achievement.description}</div>
+                {achievement.unlocked && (
+                  <div className="mt-2">
+                    <Trophy size={14} className="text-primary mx-auto" />
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Game Tips */}
+        <div className="card-modern mb-6">
+          <h3 className="font-semibold text-foreground mb-3">Pro Tips</h3>
+          <div className="space-y-2 text-sm text-muted-foreground">
+            <p>• Complete daily quests for guaranteed rewards</p>
+            <p>• Join tournaments for higher earning potential</p>
+            <p>• Practice in easy games before trying hard modes</p>
+            <p>• Check back regularly for new game releases</p>
           </div>
         </div>
       </div>
+      
+      <Navbar />
     </div>
   );
 };

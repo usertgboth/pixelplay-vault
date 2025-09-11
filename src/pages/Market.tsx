@@ -1,141 +1,263 @@
-import { useState } from 'react';
-import { Search, Filter, TrendingUp, CheckCircle } from 'lucide-react';
+import React, { useState } from 'react';
+import { Search, Filter, TrendingUp, TrendingDown } from 'lucide-react';
+import { LineChart, Line, XAxis, YAxis, ResponsiveContainer, Area, AreaChart } from 'recharts';
 import Navbar from '@/components/Navbar';
-import collectionsData from '@/data/collections.json';
-import nftCollectionsData from '@/data/nft-collections.json';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import collections from '@/data/collections.json';
+import nftCollections from '@/data/nft-collections.json';
 
-const Market = () => {
+// Mock chart data for trading
+const chartData = [
+  { time: '00:00', price: 65234, volume: 1200000 },
+  { time: '04:00', price: 65890, volume: 1800000 },
+  { time: '08:00', price: 64562, volume: 2100000 },
+  { time: '12:00', price: 66123, volume: 1900000 },
+  { time: '16:00', price: 67445, volume: 2400000 },
+  { time: '20:00', price: 66890, volume: 2000000 },
+  { time: '24:00', price: 67234, volume: 1700000 },
+];
+
+const priceData = [
+  { time: '1', price: 65000 },
+  { time: '2', price: 65500 },
+  { time: '3', price: 64800 },
+  { time: '4', price: 66200 },
+  { time: '5', price: 67100 },
+  { time: '6', price: 67234 },
+];
+
+const Market: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [activeTab, setActiveTab] = useState('MCap');
-  const [collections] = useState(collectionsData);
-  const [nftCollections] = useState(nftCollectionsData);
 
   const filteredCollections = collections.filter(collection =>
     collection.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const topGainers = [
-    { name: 'DD', change: '+120.45%', image: 'https://via.placeholder.com/50x50/8B5CF6/FFFFFF?text=DD' },
-    { name: 'CANY', change: '+60.78%', image: 'https://via.placeholder.com/50x50/10B981/FFFFFF?text=CA' },
-    { name: 'SHIB', change: '+45.12%', image: 'https://via.placeholder.com/50x50/F59E0B/FFFFFF?text=SH' }
-  ];
+  const tabs = ['MCap', 'Hot', 'New', 'Listings'];
 
   return (
     <div className="min-h-screen bg-background pb-20">
-      <Navbar />
-      
-      {/* Header */}
-      <header className="px-4 py-4">
-        <h1 className="text-2xl font-bold text-foreground mb-4">Market</h1>
-      </header>
-
-      {/* Top Gainers */}
-      <div className="px-4 mb-6">
-        <h2 className="text-lg font-bold text-foreground mb-3">Top Gainers</h2>
-        <div className="flex gap-3 overflow-x-auto pb-2">
-          {topGainers.map((item, index) => (
-            <div key={index} className="bg-card rounded-xl p-3 min-w-[120px] text-center border border-border">
-              <img 
-                src={item.image} 
-                alt={item.name}
-                className="w-8 h-8 mx-auto mb-2 rounded-full"
-              />
-              <div className="text-sm font-bold text-foreground">{item.name}</div>
-              <div className="text-xs text-accent-games font-semibold">{item.change}</div>
-            </div>
-          ))}
+      <div className="px-4 pt-6">
+        {/* Header */}
+        <div className="flex items-center justify-between mb-6">
+          <div>
+            <h1 className="text-2xl font-bold text-foreground">Market</h1>
+            <p className="text-sm text-muted-foreground mt-1">Trading & Analytics</p>
+          </div>
+          <div className="bg-primary/10 rounded-xl px-3 py-1.5">
+            <span className="text-primary text-sm font-medium">Live</span>
+          </div>
         </div>
-      </div>
 
-      {/* Tab Navigation */}
-      <div className="px-4 mb-6">
-        <div className="flex items-center gap-6">
-          {['MCap', 'Hot', 'New', 'Listings'].map((tab) => (
-            <button
-              key={tab}
-              onClick={() => setActiveTab(tab)}
-              className={`text-lg font-medium transition-colors ${
-                activeTab === tab 
-                  ? 'text-foreground' 
-                  : 'text-muted-foreground hover:text-foreground'
-              }`}
-            >
-              {tab}
-            </button>
-          ))}
-          <button className="ml-auto p-2 hover:bg-muted rounded-lg transition-colors">
-            <Filter size={20} className="text-muted-foreground" />
-          </button>
-        </div>
-      </div>
-
-      {/* Token List */}
-      <div className="px-4 space-y-1">
-        {filteredCollections.map((token) => (
-          <div key={token.id} className="flex items-center px-4 py-3 hover:bg-card/50 rounded-lg transition-colors">
-            <img 
-              src={token.image} 
-              alt={token.name}
-              className="w-10 h-10 rounded-full mr-3"
-            />
-            
-            <div className="flex-1">
-              <div className="font-semibold text-foreground">{token.name}</div>
-              <div className="text-sm text-muted-foreground">MCap: {token.mcap}</div>
-            </div>
-            
-            <div className="text-right">
-              <div className="font-semibold text-foreground">{token.price}</div>
-              <div className={`text-sm font-medium ${
-                token.isPositive ? 'text-accent-games' : 'text-destructive'
-              }`}>
-                {token.change}
+        {/* Main Trading Chart */}
+        <div className="card-trading mb-6 p-4">
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="text-lg font-bold text-foreground">BTC/USDT</span>
+                <div className="flex items-center text-green-500">
+                  <TrendingUp size={16} />
+                  <span className="text-sm ml-1">+2.34%</span>
+                </div>
               </div>
+              <div className="text-2xl font-bold text-foreground">$67,234</div>
+              <div className="text-sm text-muted-foreground">24h Vol: $2.1B</div>
+            </div>
+            <div className="flex gap-2">
+              <Button variant="outline" size="sm" className="text-xs">1H</Button>
+              <Button variant="outline" size="sm" className="text-xs">4H</Button>
+              <Button variant="default" size="sm" className="text-xs">1D</Button>
+              <Button variant="outline" size="sm" className="text-xs">1W</Button>
             </div>
           </div>
-        ))}
-      </div>
+          
+          <div className="h-48">
+            <ResponsiveContainer width="100%" height="100%">
+              <AreaChart data={priceData}>
+                <defs>
+                  <linearGradient id="priceGradient" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="hsl(221, 83%, 53%)" stopOpacity={0.3}/>
+                    <stop offset="95%" stopColor="hsl(221, 83%, 53%)" stopOpacity={0}/>
+                  </linearGradient>
+                </defs>
+                <XAxis 
+                  dataKey="time" 
+                  axisLine={false}
+                  tickLine={false}
+                  tick={{ fontSize: 12, fill: 'hsl(215, 16%, 47%)' }}
+                />
+                <YAxis 
+                  domain={['dataMin - 500', 'dataMax + 500']}
+                  axisLine={false}
+                  tickLine={false}
+                  tick={{ fontSize: 12, fill: 'hsl(215, 16%, 47%)' }}
+                  tickFormatter={(value) => `$${(value / 1000).toFixed(0)}k`}
+                />
+                <Area
+                  type="monotone"
+                  dataKey="price"
+                  stroke="hsl(221, 83%, 53%)"
+                  strokeWidth={2}
+                  fill="url(#priceGradient)"
+                />
+              </AreaChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
 
-      {/* NFT Collections Section */}
-      <div className="px-4 mt-8">
-        <h2 className="text-lg font-bold text-foreground mb-4">NFT Collections</h2>
-        
-        <div className="space-y-6">
-          {nftCollections.map((collection) => (
-            <div key={collection.id} className="space-y-3">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <h3 className="text-lg font-bold text-foreground">{collection.name}</h3>
-                  <span className="text-sm text-muted-foreground">{collection.author}</span>
-                  {collection.verified && (
-                    <CheckCircle size={16} className="text-primary" />
-                  )}
-                </div>
-                <button className="bg-accent-referrals/20 text-accent-referrals px-3 py-1 rounded-full text-sm font-semibold">
-                  {collection.button}
-                </button>
+        {/* Market Stats */}
+        <div className="grid grid-cols-2 gap-4 mb-6">
+          <div className="card-modern">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm text-muted-foreground">Market Cap</p>
+                <p className="text-lg font-bold text-foreground">$2.47T</p>
               </div>
-              
-              <div className="flex gap-3">
-                {collection.items.map((item, index) => (
-                  <div key={index} className="relative">
-                    <img 
-                      src={item.image} 
-                      alt="NFT"
-                      className="w-20 h-20 rounded-xl bg-card border border-border"
-                    />
-                    {item.moreCount && (
-                      <div className="absolute inset-0 bg-black/70 rounded-xl flex items-center justify-center">
-                        <span className="text-white text-xs font-semibold">{item.moreCount}</span>
-                      </div>
-                    )}
+              <div className="text-green-500">
+                <TrendingUp size={20} />
+              </div>
+            </div>
+            <div className="text-xs text-green-500 mt-1">+1.2% (24h)</div>
+          </div>
+          
+          <div className="card-modern">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm text-muted-foreground">24h Volume</p>
+                <p className="text-lg font-bold text-foreground">$89.2B</p>
+              </div>
+              <div className="text-red-500">
+                <TrendingDown size={20} />
+              </div>
+            </div>
+            <div className="text-xs text-red-500 mt-1">-3.1% (24h)</div>
+          </div>
+        </div>
+
+        {/* Search Bar */}
+        <div className="relative mb-4">
+          <Search size={20} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" />
+          <Input
+            type="text"
+            placeholder="Search tokens..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="pl-10 bg-card border-border"
+          />
+        </div>
+
+        {/* Tabs */}
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex bg-secondary rounded-xl p-1">
+            {tabs.map(tab => (
+              <button
+                key={tab}
+                onClick={() => setActiveTab(tab)}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                  activeTab === tab
+                    ? 'bg-primary text-primary-foreground shadow-sm'
+                    : 'text-muted-foreground hover:text-foreground'
+                }`}
+              >
+                {tab}
+              </button>
+            ))}
+          </div>
+          <Button variant="outline" size="sm">
+            <Filter size={16} className="mr-1" />
+            Filter
+          </Button>
+        </div>
+
+        {/* Tokens List */}
+        <div className="space-y-3 mb-6">
+          {filteredCollections.slice(0, 10).map((collection, index) => (
+            <div key={index} className="card-modern">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-3">
+                  <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                    <span className="text-primary font-bold text-sm">
+                      {collection.name.charAt(0)}
+                    </span>
                   </div>
-                ))}
+                  <div>
+                    <h3 className="font-semibold text-foreground">{collection.name}</h3>
+                    <p className="text-sm text-muted-foreground">
+                      MCap: ${collection.mcap}
+                    </p>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <div className="font-semibold text-foreground">${collection.price}</div>
+                  <div className={`text-sm ${
+                    collection.change.startsWith('+') ? 'text-green-500' : 'text-red-500'
+                  }`}>
+                    {collection.change}
+                  </div>
+                </div>
               </div>
             </div>
           ))}
         </div>
+
+        {/* Mini Volume Chart */}
+        <div className="card-modern mb-6">
+          <div className="flex items-center justify-between mb-3">
+            <h3 className="font-semibold text-foreground">24h Volume</h3>
+            <span className="text-sm text-muted-foreground">$89.2B</span>
+          </div>
+          <div className="h-24">
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={chartData}>
+                <Line 
+                  type="monotone" 
+                  dataKey="volume" 
+                  stroke="hsl(221, 83%, 53%)" 
+                  strokeWidth={2}
+                  dot={false}
+                />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+
+        {/* NFT Collections */}
+        <div className="mb-6">
+          <h2 className="text-lg font-bold text-foreground mb-4">Trending NFTs</h2>
+          <div className="space-y-3">
+            {nftCollections.slice(0, 5).map((collection, index) => (
+              <div key={index} className="card-modern">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
+                      <span className="text-primary font-bold">#{index + 1}</span>
+                    </div>
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <h3 className="font-semibold text-foreground">{collection.name}</h3>
+                        {collection.verified && (
+                          <div className="w-4 h-4 rounded-full bg-primary flex items-center justify-center">
+                            <span className="text-white text-xs">✓</span>
+                          </div>
+                        )}
+                      </div>
+                      <p className="text-sm text-muted-foreground">by {collection.author}</p>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <div className="font-semibold text-foreground">2.{index + 1} ETH</div>
+                    <div className="text-sm text-muted-foreground">{(Math.random() * 100).toFixed(1)} Vol</div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
+      
+      <Navbar />
     </div>
   );
 };

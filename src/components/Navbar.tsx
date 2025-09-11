@@ -12,7 +12,6 @@ const Navbar: React.FC = () => {
   const location = useLocation();
 
   const navItems: NavItem[] = [
-    { path: '/', icon: Home, label: 'Home' },
     { path: '/market', icon: Store, label: 'Market' },
     { path: '/games', icon: Gamepad2, label: 'Games' },
     { path: '/referrals', icon: Users, label: 'Referrals' },
@@ -20,8 +19,8 @@ const Navbar: React.FC = () => {
   ];
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 bg-card/95 backdrop-blur-sm border-t border-border z-50">
-      <div className="flex justify-around items-center py-2 px-4 max-w-md mx-auto">
+    <nav className="fixed bottom-0 left-0 right-0 bg-card/95 backdrop-blur-sm border-t border-border z-50 safe-area-inset-bottom">
+      <div className="flex justify-around items-center py-3 px-4 max-w-md mx-auto">
         {navItems.map(({ path, icon: Icon, label }) => {
           const isActive = location.pathname === path;
           return (
@@ -30,19 +29,19 @@ const Navbar: React.FC = () => {
               to={path}
               className={`nav-item ${isActive ? 'active' : ''}`}
             >
-              <div className={`p-2 rounded-lg transition-all duration-200 ${
+              <div className={`p-2.5 rounded-xl transition-all duration-200 ${
                 isActive 
-                  ? 'bg-accent-orange/20' 
-                  : 'hover:bg-muted/50'
+                  ? 'bg-primary/10' 
+                  : 'hover:bg-muted'
               }`}>
                 <Icon 
-                  size={20} 
-                  className={isActive ? 'text-accent-orange' : 'text-muted-foreground hover:text-foreground'}
+                  size={22} 
+                  className={isActive ? 'text-primary' : 'text-muted-foreground hover:text-foreground'}
                 />
               </div>
               <span className={`text-xs mt-1 font-medium transition-colors ${
                 isActive 
-                  ? 'text-accent-orange' 
+                  ? 'text-primary' 
                   : 'text-muted-foreground'
               }`}>
                 {label}

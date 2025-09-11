@@ -43,10 +43,9 @@ export default {
         accent: {
           DEFAULT: "hsl(var(--accent))",
           foreground: "hsl(var(--accent-foreground))",
-          orange: "hsl(var(--accent-orange))",
-          "orange-dark": "hsl(var(--accent-orange-dark))",
           "blue-light": "hsl(var(--accent-blue-light))",
           "blue-dark": "hsl(var(--accent-blue-dark))",
+          "blue-soft": "hsl(var(--accent-blue-soft))",
           market: "hsl(var(--accent-market))",
           games: "hsl(var(--accent-games))",
           referrals: "hsl(var(--accent-referrals))",
@@ -67,9 +66,9 @@ export default {
         sm: "calc(var(--radius) - 4px)",
       },
       boxShadow: {
-        'glow': '0 0 40px hsl(25 95% 53% / 0.2)',
-        'orange': '0 0 20px hsl(25 95% 53% / 0.3)',
-        'blue': '0 0 20px hsl(220 91% 65% / 0.3)',
+        'blue': '0 4px 20px hsl(221 83% 53% / 0.15)',
+        'soft': '0 2px 10px hsl(215 25% 27% / 0.1)',
+        'card': '0 1px 3px hsl(215 25% 27% / 0.1)',
       },
       keyframes: {
         "accordion-down": {

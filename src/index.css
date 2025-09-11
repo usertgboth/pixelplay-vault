@@ -8,63 +8,60 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Core colors - Black-Blue theme with Orange accents */
-    --background: 240 10% 4%;
-    --foreground: 0 0% 98%;
+    /* Core colors - Clean White-Blue theme */
+    --background: 0 0% 100%;
+    --foreground: 215 25% 27%;
 
-    --card: 240 15% 6%;
-    --card-foreground: 0 0% 98%;
+    --card: 0 0% 100%;
+    --card-foreground: 215 25% 27%;
 
-    --popover: 240 15% 6%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 215 25% 27%;
 
-    /* Brand colors - Black-Blue-Orange theme */
-    --primary: 220 91% 65%;
+    /* Brand colors - Blue primary */
+    --primary: 221 83% 53%;
     --primary-foreground: 0 0% 100%;
-    --primary-glow: 220 100% 75%;
+    --primary-glow: 221 100% 70%;
 
-    --secondary: 240 20% 10%;
-    --secondary-foreground: 0 0% 98%;
+    --secondary: 210 40% 98%;
+    --secondary-foreground: 215 25% 27%;
 
-    /* Orange accent for highlights */
-    --accent-orange: 25 95% 53%;
-    --accent-orange-dark: 20 90% 45%;
+    /* Blue variations for accents */
+    --accent-blue-light: 221 83% 53%;
+    --accent-blue-dark: 221 70% 45%;
+    --accent-blue-soft: 214 100% 97%;
     
-    /* Blue variations */
-    --accent-blue-light: 220 91% 65%;
-    --accent-blue-dark: 220 85% 45%;
+    /* Unified blue accents */
+    --accent-market: 221 83% 53%;
+    --accent-games: 221 83% 53%;
+    --accent-referrals: 221 83% 53%;
+    --accent-profile: 221 83% 53%;
 
-    /* Accent colors unified with orange theme */
-    --accent-market: 25 95% 53%;
-    --accent-games: 25 95% 53%;
-    --accent-referrals: 25 95% 53%;
-    --accent-profile: 25 95% 53%;
+    --muted: 210 40% 98%;
+    --muted-foreground: 215 16% 47%;
 
-    --muted: 240 20% 10%;
-    --muted-foreground: 240 15% 65%;
-
-    --accent: 240 20% 10%;
-    --accent-foreground: 0 0% 98%;
+    --accent: 210 40% 98%;
+    --accent-foreground: 215 25% 27%;
 
     --destructive: 0 84% 60%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 240 20% 15%;
-    --input: 240 20% 10%;
-    --ring: 25 95% 53%;
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 221 83% 53%;
 
     --radius: 0.75rem;
 
-    /* Gradients - Black-Blue-Orange theme */
-    --gradient-primary: linear-gradient(135deg, hsl(220 91% 65%), hsl(25 95% 53%));
-    --gradient-orange: linear-gradient(135deg, hsl(25 95% 53%), hsl(20 90% 45%));
-    --gradient-blue: linear-gradient(135deg, hsl(220 91% 65%), hsl(220 85% 45%));
-    --gradient-dark: linear-gradient(135deg, hsl(240 15% 6%), hsl(240 10% 4%));
+    /* Gradients - Clean Blue theme */
+    --gradient-primary: linear-gradient(135deg, hsl(221 83% 53%), hsl(221 100% 70%));
+    --gradient-blue: linear-gradient(135deg, hsl(221 83% 53%), hsl(221 70% 45%));
+    --gradient-soft: linear-gradient(135deg, hsl(214 100% 97%), hsl(210 40% 98%));
+    --gradient-card: linear-gradient(135deg, hsl(0 0% 100%), hsl(214 100% 97%));
 
     /* Shadows and effects */
-    --shadow-orange: 0 0 20px hsl(25 95% 53% / 0.3);
-    --shadow-blue: 0 0 20px hsl(220 91% 65% / 0.3);
-    --shadow-glow: 0 0 40px hsl(25 95% 53% / 0.2);
+    --shadow-blue: 0 4px 20px hsl(221 83% 53% / 0.15);
+    --shadow-soft: 0 2px 10px hsl(215 25% 27% / 0.1);
+    --shadow-card: 0 1px 3px hsl(215 25% 27% / 0.1);
 
     /* Theme specific */
     --border-glow: 2px;
@@ -83,38 +80,39 @@ All colors MUST be HSL.
 }
 
 @layer components {
-  /* Modern button variants with Orange-Blue theme */
+  /* Modern button variants with Blue theme */
   .btn-modern {
-    @apply px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-200;
+    @apply px-4 py-2.5 rounded-xl font-medium text-sm transition-all duration-200;
     @apply border border-transparent focus:outline-none focus:ring-2 focus:ring-offset-2;
   }
 
   .btn-primary {
-    @apply bg-accent-orange text-background hover:bg-accent-orange-dark;
-    @apply focus:ring-accent-orange;
-    box-shadow: var(--shadow-orange);
-  }
-
-  .btn-secondary {
-    @apply bg-accent-blue-light text-white hover:bg-accent-blue-dark;
-    @apply focus:ring-accent-blue-light;
+    @apply bg-primary text-primary-foreground hover:bg-accent-blue-dark;
+    @apply focus:ring-primary;
     box-shadow: var(--shadow-blue);
   }
 
+  .btn-secondary {
+    @apply bg-secondary text-secondary-foreground hover:bg-muted;
+    @apply focus:ring-primary;
+    box-shadow: var(--shadow-soft);
+  }
+
   .btn-outline {
-    @apply border-accent-orange text-accent-orange hover:bg-accent-orange hover:text-background;
-    @apply focus:ring-accent-orange;
+    @apply border-primary text-primary hover:bg-primary hover:text-primary-foreground;
+    @apply focus:ring-primary;
   }
 
   /* Modern cards */
   .card-modern {
-    @apply bg-card/80 backdrop-blur-sm border border-border rounded-2xl p-6;
-    @apply transition-all duration-300 hover:bg-card hover:border-accent-orange/30;
+    @apply bg-card border border-border rounded-2xl p-4;
+    @apply transition-all duration-300 hover:shadow-lg;
+    box-shadow: var(--shadow-card);
   }
 
-  .card-glow {
+  .card-trading {
     @apply card-modern;
-    box-shadow: var(--shadow-glow);
+    background: var(--gradient-card);
   }
 
   /* Navigation styles */
@@ -123,22 +121,15 @@ All colors MUST be HSL.
   }
 
   .nav-item.active {
-    @apply bg-accent-orange/20 border border-accent-orange/30;
+    @apply bg-primary/10 border border-primary/20;
   }
 
   .nav-item:hover:not(.active) {
-    @apply bg-muted/50;
+    @apply bg-muted;
   }
 }
 
 @layer utilities {
-  .text-gradient-orange {
-    background: var(--gradient-orange);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
   .text-gradient-blue {
     background: var(--gradient-blue);
     -webkit-background-clip: text;
