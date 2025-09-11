@@ -51,61 +51,6 @@ const Market: React.FC = () => {
           </div>
         </div>
 
-        {/* Main Trading Chart */}
-        <div className="card-trading mb-6 p-4">
-          <div className="flex items-center justify-between mb-4">
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="text-lg font-bold text-foreground">BTC/USDT</span>
-                <div className="flex items-center text-green-500">
-                  <TrendingUp size={16} />
-                  <span className="text-sm ml-1">+2.34%</span>
-                </div>
-              </div>
-              <div className="text-2xl font-bold text-foreground">$67,234</div>
-              <div className="text-sm text-muted-foreground">24h Vol: $2.1B</div>
-            </div>
-            <div className="flex gap-2">
-              <Button variant="outline" size="sm" className="text-xs">1H</Button>
-              <Button variant="outline" size="sm" className="text-xs">4H</Button>
-              <Button variant="default" size="sm" className="text-xs">1D</Button>
-              <Button variant="outline" size="sm" className="text-xs">1W</Button>
-            </div>
-          </div>
-          
-          <div className="h-48">
-            <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={priceData}>
-                <defs>
-                  <linearGradient id="priceGradient" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="hsl(221, 83%, 53%)" stopOpacity={0.3}/>
-                    <stop offset="95%" stopColor="hsl(221, 83%, 53%)" stopOpacity={0}/>
-                  </linearGradient>
-                </defs>
-                <XAxis 
-                  dataKey="time" 
-                  axisLine={false}
-                  tickLine={false}
-                  tick={{ fontSize: 12, fill: 'hsl(215, 16%, 47%)' }}
-                />
-                <YAxis 
-                  domain={['dataMin - 500', 'dataMax + 500']}
-                  axisLine={false}
-                  tickLine={false}
-                  tick={{ fontSize: 12, fill: 'hsl(215, 16%, 47%)' }}
-                  tickFormatter={(value) => `$${(value / 1000).toFixed(0)}k`}
-                />
-                <Area
-                  type="monotone"
-                  dataKey="price"
-                  stroke="hsl(221, 83%, 53%)"
-                  strokeWidth={2}
-                  fill="url(#priceGradient)"
-                />
-              </AreaChart>
-            </ResponsiveContainer>
-          </div>
-        </div>
 
         {/* Market Stats */}
         <div className="grid grid-cols-2 gap-4 mb-6">
