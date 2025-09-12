@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Home, Store, Gamepad2, Users, User, LucideIcon } from 'lucide-react';
-import pixelMintLogo from '@/assets/pixel-mint-logo.png';
+import navbarLogo from '@/assets/navbar-logo.png';
 
 interface NavItem {
   path: string;
@@ -37,7 +37,7 @@ const Navbar: React.FC = () => {
               }`}>
                 {path === '/' ? (
                   <img 
-                    src={pixelMintLogo} 
+                    src={navbarLogo} 
                     alt="Logo" 
                     className="w-6 h-6 object-contain brightness-0 invert"
                   />
