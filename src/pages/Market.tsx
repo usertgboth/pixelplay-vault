@@ -2,7 +2,6 @@ import React, { useState, useCallback } from 'react';
 import { Search, Filter, TrendingUp, TrendingDown, ExternalLink, Heart } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, ResponsiveContainer, Area, AreaChart } from 'recharts';
 import Navbar from '@/components/Navbar';
-import PxlMintLoader from '@/components/PxlMintLoader';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
@@ -34,7 +33,6 @@ const Market: React.FC = () => {
   const [activeTab, setActiveTab] = useState('MCap');
   const [favorites, setFavorites] = useState<string[]>([]);
   const [showFilter, setShowFilter] = useState(false);
-  const [showPxlMintLoader, setShowPxlMintLoader] = useState(false);
   const { toast } = useToast();
 
   const filteredCollections = collections.filter(collection =>
@@ -81,31 +79,14 @@ const Market: React.FC = () => {
   }, [toast]);
 
   const handlePixelMint = useCallback(() => {
-    setShowPxlMintLoader(true);
     toast({
-      title: "Pixel Mint",
-      description: "Loading PxlMint interface...",
-    });
-  }, [toast]);
-
-  const handleLoaderComplete = useCallback(() => {
-    setShowPxlMintLoader(false);
-    toast({
-      title: "PxlMint Ready!",
-      description: "Welcome to the pixel art minting platform! 🎨",
+      title: "NFT Collection",
+      description: "Opening NFT minting interface...",
     });
   }, [toast]);
 
   return (
-    <div className="relative">
-      {showPxlMintLoader && (
-        <PxlMintLoader 
-          onComplete={handleLoaderComplete}
-          duration={4000}
-        />
-      )}
-      
-      <div className="min-h-screen bg-background pb-20">
+    <div className="min-h-screen bg-background pb-20">
         <div className="px-4 pt-6">
           {/* Header */}
           <div className="flex items-center justify-between mb-6">
@@ -128,10 +109,10 @@ const Market: React.FC = () => {
                 <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
                   <span className="text-primary-foreground text-sm font-bold">🎨</span>
                 </div>
-                <h2 className="text-xl font-bold text-foreground">Pixel Mint Launched!</h2>
+                <h2 className="text-xl font-bold text-foreground">NFT Collection Drop!</h2>
               </div>
               <p className="text-sm text-muted-foreground mb-3">
-                Exclusive pixel art collection now available for minting
+                Exclusive NFT collection now available for minting
               </p>
               <div className="flex items-center justify-center gap-4 text-sm">
                 <div className="text-primary font-semibold">Starting at 0.1 ETH</div>
@@ -294,12 +275,11 @@ const Market: React.FC = () => {
                   </div>
                 </div>
               ))}
-            </div>
           </div>
         </div>
-        
-        <Navbar />
       </div>
+      
+      <Navbar />
     </div>
   );
 };
