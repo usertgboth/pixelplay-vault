@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Home, Store, Gamepad2, Users, User, LucideIcon } from 'lucide-react';
-import navbarLogo from '@/assets/navbar-logo.png';
+import navbarLogo from '/navbar-logo.png';
 
 interface NavItem {
   path: string;
