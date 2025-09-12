@@ -39,7 +39,7 @@ const Navbar: React.FC = () => {
                   <img 
                     src={pixelMintLogo} 
                     alt="Logo" 
-                    className="w-6 h-6 object-contain"
+                    className="w-6 h-6 object-contain brightness-0 invert"
                   />
                 ) : (
                   <Icon 
