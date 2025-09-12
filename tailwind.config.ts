@@ -91,6 +91,9 @@ export default {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "pixel-glow": "pixel-glow 2s ease-in-out infinite",
+        "pixel-dance": "pixel-dance 3s ease-in-out infinite",
+        "bounce-slow": "bounce 2s ease-in-out infinite",
       },
     },
   },
