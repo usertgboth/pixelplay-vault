@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { Search, Filter, TrendingUp, TrendingDown, ExternalLink, Heart } from 'lucide-react';
+import pixelMintLogo from '@/assets/pixel-mint-logo.png';
 import { LineChart, Line, XAxis, YAxis, ResponsiveContainer, Area, AreaChart } from 'recharts';
 import Navbar from '@/components/Navbar';
 import { Button } from '@/components/ui/button';
@@ -107,8 +108,8 @@ const Market: React.FC = () => {
         >
           <div className="text-center py-4">
             <div className="flex items-center justify-center gap-2 mb-2">
-              <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
-                <span className="text-primary-foreground text-sm font-bold">🎨</span>
+              <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center p-1">
+                <img src={pixelMintLogo} alt="Pixel Mint" className="w-full h-full object-contain" />
               </div>
               <h2 className="text-xl font-bold text-foreground">Pixel Mint Launched!</h2>
             </div>
