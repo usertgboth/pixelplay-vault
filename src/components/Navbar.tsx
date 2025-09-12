@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Home, Store, Gamepad2, Users, User, LucideIcon } from 'lucide-react';
+import pixelMintLogo from '@/assets/pixel-mint-logo.png';
 
 interface NavItem {
   path: string;
@@ -12,6 +13,7 @@ const Navbar: React.FC = () => {
   const location = useLocation();
 
   const navItems: NavItem[] = [
+    { path: '/', icon: Home, label: 'Home' },
     { path: '/market', icon: Store, label: 'Market' },
     { path: '/games', icon: Gamepad2, label: 'Games' },
     { path: '/referrals', icon: Users, label: 'Referrals' },
@@ -34,10 +36,18 @@ const Navbar: React.FC = () => {
                   ? 'bg-primary/10' 
                   : 'hover:bg-muted'
               }`}>
-                <Icon 
-                  size={22} 
-                  className={isActive ? 'text-primary' : 'text-muted-foreground hover:text-foreground'}
-                />
+                {path === '/' ? (
+                  <img 
+                    src={pixelMintLogo} 
+                    alt="Logo" 
+                    className="w-6 h-6 object-contain"
+                  />
+                ) : (
+                  <Icon 
+                    size={22} 
+                    className={isActive ? 'text-primary' : 'text-muted-foreground hover:text-foreground'}
+                  />
+                )}
               </div>
               <span className={`text-xs mt-1 font-medium transition-colors ${
                 isActive 
