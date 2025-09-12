@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import pxlmintIcon from '@/assets/pxlmint-icon.png';
 
 interface PxlMintLoaderProps {
   onComplete?: () => void;
@@ -70,7 +69,7 @@ const PxlMintLoader: React.FC<PxlMintLoaderProps> = ({ onComplete, duration = 30
           <div className="absolute inset-0 bg-primary/20 rounded-3xl animate-ping" />
           <div className="relative bg-card p-6 rounded-3xl border border-primary/20 shadow-blue">
             <img 
-              src={pxlmintIcon} 
+              src="/pxlmint-icon.png" 
               alt="PxlMint" 
               className="w-16 h-16 mx-auto filter brightness-0 invert-0"
               style={{
