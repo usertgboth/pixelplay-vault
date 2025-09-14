@@ -10,11 +10,11 @@ const AppLoader: React.FC<AppLoaderProps> = ({ children }) => {
   const [showContent, setShowContent] = useState(false);
 
   useEffect(() => {
-    // Check if this is first visit in session
-    const hasLoadedBefore = sessionStorage.getItem('nft_app_loaded');
+    // For Telegram mini-app, always show loading on fresh page loads
+    const isRefresh = performance.navigation?.type === 1 || !sessionStorage.getItem('nft_app_loaded');
     
-    if (hasLoadedBefore) {
-      // Skip loading animation on subsequent navigations
+    if (!isRefresh) {
+      // Skip loading animation only on same-session navigations
       setIsLoading(false);
       setShowContent(true);
     }
@@ -31,7 +31,7 @@ const AppLoader: React.FC<AppLoaderProps> = ({ children }) => {
   };
 
   if (isLoading) {
-    return <NFTLoader onComplete={handleLoadingComplete} duration={3500} />;
+    return <NFTLoader onComplete={handleLoadingComplete} duration={6000} />;
   }
 
   return (
