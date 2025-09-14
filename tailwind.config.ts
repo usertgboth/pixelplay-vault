@@ -137,6 +137,80 @@ export default {
           "50%": { transform: "translateY(-12px) rotate(1deg) scale(1.15)" },
           "66%": { transform: "translateY(-2px) rotate(-2deg) scale(1.05)" },
           "83%": { transform: "translateY(-6px) rotate(1deg) scale(1.1)" }
+        },
+        "glitch": {
+          "0%, 100%": { 
+            transform: "translate(0)",
+            filter: "hue-rotate(0deg)"
+          },
+          "10%": { 
+            transform: "translate(-2px, 2px)",
+            filter: "hue-rotate(90deg)"
+          },
+          "20%": { 
+            transform: "translate(-8px, -2px)",
+            filter: "hue-rotate(180deg)"
+          },
+          "30%": { 
+            transform: "translate(8px, 2px)",
+            filter: "hue-rotate(270deg)"
+          },
+          "40%": { 
+            transform: "translate(-2px, -2px)",
+            filter: "hue-rotate(360deg)"
+          },
+          "50%": { 
+            transform: "translate(2px, 2px)",
+            filter: "hue-rotate(180deg)"
+          },
+          "60%": { 
+            transform: "translate(-2px, 2px)",
+            filter: "hue-rotate(90deg)"
+          },
+          "70%": { 
+            transform: "translate(2px, -2px)",
+            filter: "hue-rotate(270deg)"
+          },
+          "80%": { 
+            transform: "translate(-2px, -2px)",
+            filter: "hue-rotate(0deg)"
+          },
+          "90%": { 
+            transform: "translate(2px, 2px)",
+            filter: "hue-rotate(90deg)"
+          }
+        },
+        "matrix-rain": {
+          "0%": { transform: "translateY(-100vh)", opacity: "0" },
+          "10%": { opacity: "1" },
+          "90%": { opacity: "1" },
+          "100%": { transform: "translateY(100vh)", opacity: "0" }
+        },
+        "neon-flicker": {
+          "0%, 100%": { 
+            textShadow: "0 0 5px currentColor, 0 0 10px currentColor, 0 0 15px currentColor, 0 0 20px currentColor"
+          },
+          "50%": { 
+            textShadow: "0 0 2px currentColor, 0 0 5px currentColor, 0 0 8px currentColor, 0 0 12px currentColor"
+          }
+        },
+        "hologram": {
+          "0%, 100%": { 
+            opacity: "0.8",
+            transform: "scale(1) skew(0deg)"
+          },
+          "25%": { 
+            opacity: "0.9",
+            transform: "scale(1.02) skew(0.5deg)"
+          },
+          "50%": { 
+            opacity: "0.7",
+            transform: "scale(0.98) skew(-0.5deg)"
+          },
+          "75%": { 
+            opacity: "0.95",
+            transform: "scale(1.01) skew(0.3deg)"
+          }
         }
       },
       animation: {
@@ -150,7 +224,11 @@ export default {
         "text-wave": "text-wave 2s ease-in-out infinite",
         "text-shake": "text-shake 0.5s ease-in-out infinite",
         "background-pulse": "background-pulse 3s ease-in-out infinite",
-        "letters-dance": "letters-dance 2s ease-in-out infinite"
+        "letters-dance": "letters-dance 2s ease-in-out infinite",
+        "glitch": "glitch 0.3s ease-in-out infinite",
+        "matrix-rain": "matrix-rain 3s linear infinite",
+        "neon-flicker": "neon-flicker 1.5s ease-in-out infinite",
+        "hologram": "hologram 4s ease-in-out infinite"
       },
     },
   },
