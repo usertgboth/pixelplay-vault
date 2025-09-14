@@ -105,42 +105,42 @@ const Market: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-background pb-20">
-      <div className="px-4 pt-6">
+      <div className="px-4 pt-8">
         {/* Header with Logo */}
-        <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center justify-between mb-8">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 bg-primary rounded-xl flex items-center justify-center">
-              <span className="text-primary-foreground font-bold text-lg">PX</span>
+            <div className="w-14 h-14 bg-gradient-to-br from-primary to-primary/80 rounded-2xl flex items-center justify-center shadow-lg">
+              <span className="text-white font-bold text-xl">PX</span>
             </div>
-            <h1 className="text-2xl font-bold text-foreground">Pxlmint</h1>
+            <h1 className="text-3xl font-bold text-foreground">Pxlmint</h1>
           </div>
-          <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center">
-            <Mic size={20} className="text-primary" />
+          <div className="w-12 h-12 bg-primary/10 rounded-2xl flex items-center justify-center">
+            <Mic size={22} className="text-primary" />
           </div>
         </div>
 
         {/* Search Bar */}
-        <div className="relative mb-6">
-          <Search size={20} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" />
+        <div className="relative mb-8">
+          <Search size={20} className="absolute left-4 top-1/2 transform -translate-y-1/2 text-muted-foreground" />
           <Input
             type="text"
             placeholder="Search"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-10 bg-secondary/50 border-none rounded-xl text-foreground placeholder:text-muted-foreground"
+            className="pl-12 h-14 bg-secondary/50 border-none rounded-2xl text-lg text-foreground placeholder:text-muted-foreground shadow-sm"
           />
         </div>
 
         {/* Category Tabs */}
-        <div className="flex gap-6 mb-6 overflow-x-auto">
+        <div className="flex gap-8 mb-8 overflow-x-auto scrollbar-hide">
           {categories.map(category => (
             <button
               key={category}
               onClick={() => setActiveCategory(category)}
-              className={`text-base font-medium whitespace-nowrap ${
+              className={`text-lg font-semibold whitespace-nowrap pb-2 transition-colors ${
                 activeCategory === category
-                  ? 'text-primary'
-                  : 'text-muted-foreground'
+                  ? 'text-primary border-b-2 border-primary'
+                  : 'text-muted-foreground hover:text-foreground'
               }`}
             >
               {category}
@@ -149,28 +149,30 @@ const Market: React.FC = () => {
         </div>
 
         {/* Trending Collections */}
-        <div className="mb-6">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-bold text-foreground">Trending Collections</h2>
-            <button className="flex items-center gap-1 text-primary text-sm font-medium">
+        <div className="mb-8">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-2xl font-bold text-foreground">Trending Collections</h2>
+            <button className="flex items-center gap-2 text-primary text-lg font-semibold hover:opacity-80 transition-opacity">
               See all
-              <ChevronRight size={16} />
+              <ChevronRight size={18} />
             </button>
           </div>
           
-          <div className="flex gap-3 overflow-x-auto">
+          <div className="flex gap-4 overflow-x-auto scrollbar-hide pb-2">
             {trendingCollections.map(collection => (
               <div 
                 key={collection.id}
-                className="flex-shrink-0 w-44 cursor-pointer"
+                className="flex-shrink-0 w-48 cursor-pointer group"
                 onClick={() => handleCollectionClick(collection.name)}
               >
-                <div className={`${collection.image} h-24 rounded-2xl flex items-center justify-center text-4xl mb-2`}>
+                <div className={`${collection.image} h-28 rounded-3xl flex items-center justify-center text-5xl mb-3 shadow-lg group-hover:scale-105 transition-transform duration-200`}>
                   {collection.icon}
                 </div>
-                <h3 className="font-semibold text-foreground text-sm mb-1">{collection.name}</h3>
-                <p className="text-xs text-muted-foreground mb-1">{collection.items}</p>
-                <p className="text-xs text-muted-foreground">{collection.price}</p>
+                <div className="px-1">
+                  <h3 className="font-bold text-foreground text-lg mb-1 truncate">{collection.name}</h3>
+                  <p className="text-sm text-muted-foreground mb-1">{collection.items}</p>
+                  <p className="text-sm font-semibold text-muted-foreground">{collection.price}</p>
+                </div>
               </div>
             ))}
           </div>
@@ -178,20 +180,20 @@ const Market: React.FC = () => {
 
         {/* Market Section */}
         <div className="mb-6">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-bold text-foreground">Market</h2>
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-2xl font-bold text-foreground">Market</h2>
           </div>
           
           {/* Market Tabs */}
-          <div className="flex gap-6 mb-4">
+          <div className="flex gap-8 mb-6 border-b border-border">
             {marketTabs.map(tab => (
               <button
                 key={tab}
                 onClick={() => setActiveMarketTab(tab)}
-                className={`text-base font-medium ${
+                className={`text-lg font-semibold pb-3 transition-colors ${
                   activeMarketTab === tab
-                    ? 'text-primary'
-                    : 'text-muted-foreground'
+                    ? 'text-primary border-b-2 border-primary -mb-px'
+                    : 'text-muted-foreground hover:text-foreground'
                 }`}
               >
                 {tab}
@@ -200,27 +202,27 @@ const Market: React.FC = () => {
           </div>
 
           {/* NFT Listings */}
-          <div className="space-y-3">
+          <div className="space-y-4">
             {marketListings.map(listing => (
               <div 
                 key={listing.id}
-                className="flex items-center justify-between cursor-pointer hover:bg-secondary/30 rounded-xl p-3 transition-colors"
+                className="flex items-center justify-between cursor-pointer hover:bg-secondary/30 rounded-2xl p-4 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
                 onClick={() => handleNFTClick(listing.name)}
               >
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-primary rounded-xl flex items-center justify-center">
-                    <span className="text-primary-foreground font-bold text-sm">
+                <div className="flex items-center gap-4">
+                  <div className="w-14 h-14 bg-primary rounded-2xl flex items-center justify-center shadow-md">
+                    <span className="text-white font-bold text-lg">
                       {listing.avatar}
                     </span>
                   </div>
                   <div>
-                    <h3 className="font-semibold text-foreground text-sm">{listing.name}</h3>
-                    <p className="text-xs text-muted-foreground">{listing.collection}</p>
+                    <h3 className="font-bold text-foreground text-lg mb-1">{listing.name}</h3>
+                    <p className="text-sm text-muted-foreground">{listing.collection}</p>
                   </div>
                 </div>
                 <div className="text-right">
-                  <p className="font-semibold text-foreground text-sm">{listing.price}</p>
-                  <p className={`text-xs ${
+                  <p className="font-bold text-foreground text-lg mb-1">{listing.price}</p>
+                  <p className={`text-sm font-semibold ${
                     listing.positive ? 'text-green-500' : 'text-red-500'
                   }`}>
                     {listing.change}
