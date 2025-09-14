@@ -87,6 +87,57 @@ export default {
             height: "0",
           },
         },
+        "text-glow": {
+          "0%, 100%": { 
+            textShadow: "0 0 10px hsl(var(--primary) / 0.5)",
+            filter: "blur(0px)"
+          },
+          "50%": { 
+            textShadow: "0 0 20px hsl(var(--primary) / 0.8), 0 0 40px hsl(var(--primary-glow) / 0.6), 0 0 60px hsl(var(--primary-glow) / 0.4)",
+            filter: "blur(0.5px)"
+          }
+        },
+        "text-rainbow": {
+          "0%": { filter: "hue-rotate(0deg)" },
+          "25%": { filter: "hue-rotate(90deg)" },
+          "50%": { filter: "hue-rotate(180deg)" },
+          "75%": { filter: "hue-rotate(270deg)" },
+          "100%": { filter: "hue-rotate(360deg)" }
+        },
+        "text-wave": {
+          "0%, 100%": { transform: "translateY(0px)" },
+          "25%": { transform: "translateY(-10px)" },
+          "50%": { transform: "translateY(0px)" },
+          "75%": { transform: "translateY(10px)" }
+        },
+        "text-shake": {
+          "0%, 100%": { transform: "translateX(0px)" },
+          "10%": { transform: "translateX(-2px)" },
+          "20%": { transform: "translateX(2px)" },
+          "30%": { transform: "translateX(-2px)" },
+          "40%": { transform: "translateX(2px)" },
+          "50%": { transform: "translateX(-1px)" },
+          "60%": { transform: "translateX(1px)" },
+          "70%": { transform: "translateX(-1px)" },
+          "80%": { transform: "translateX(1px)" },
+          "90%": { transform: "translateX(-1px)" }
+        },
+        "background-pulse": {
+          "0%, 100%": { 
+            background: "radial-gradient(circle at 50% 50%, hsl(var(--primary) / 0.1) 0%, transparent 50%)"
+          },
+          "50%": { 
+            background: "radial-gradient(circle at 50% 50%, hsl(var(--primary) / 0.3) 0%, transparent 70%)"
+          }
+        },
+        "letters-dance": {
+          "0%, 100%": { transform: "translateY(0px) rotate(0deg) scale(1)" },
+          "16%": { transform: "translateY(-8px) rotate(2deg) scale(1.1)" },
+          "33%": { transform: "translateY(-4px) rotate(-1deg) scale(1.05)" },
+          "50%": { transform: "translateY(-12px) rotate(1deg) scale(1.15)" },
+          "66%": { transform: "translateY(-2px) rotate(-2deg) scale(1.05)" },
+          "83%": { transform: "translateY(-6px) rotate(1deg) scale(1.1)" }
+        }
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -94,6 +145,12 @@ export default {
         "pixel-glow": "pixel-glow 2s ease-in-out infinite",
         "pixel-dance": "pixel-dance 3s ease-in-out infinite",
         "bounce-slow": "bounce 2s ease-in-out infinite",
+        "text-glow": "text-glow 2s ease-in-out infinite",
+        "text-rainbow": "text-rainbow 3s linear infinite",
+        "text-wave": "text-wave 2s ease-in-out infinite",
+        "text-shake": "text-shake 0.5s ease-in-out infinite",
+        "background-pulse": "background-pulse 3s ease-in-out infinite",
+        "letters-dance": "letters-dance 2s ease-in-out infinite"
       },
     },
   },
