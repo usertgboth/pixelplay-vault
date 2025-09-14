@@ -8,15 +8,15 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-  /* Core colors - Dark theme for Telegram Mini App */
-  --background: 213 19% 18%;
-  --foreground: 0 0% 95%;
+  /* Core colors - Clean White-Blue theme */
+  --background: 0 0% 100%;
+  --foreground: 215 25% 27%;
 
-  --card: 213 19% 20%;
-  --card-foreground: 0 0% 95%;
+  --card: 0 0% 100%;
+  --card-foreground: 215 25% 27%;
 
-  --popover: 213 19% 20%;
-  --popover-foreground: 0 0% 95%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 215 25% 27%;
 
     /* Brand colors - Blue primary */
     --primary: 221 83% 53%;
